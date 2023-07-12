@@ -2,3 +2,17 @@
 .page {
   
 }
+
+.pageContent {
+    padding: 0 10vw;
+}
+
+.productSectionTitle {
+    margin-bottom: 1rem;
+}
+
+.productGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1rem;
+}
