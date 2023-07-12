@@ -18,29 +18,31 @@ type DiscountCardProps = {
 }
 const DiscountCard = ({ scrollToShop }: DiscountCardProps) => {
   return (
-    <motion.div
+    <div
         className={styles.card}
-        variants={containerVariants}
-        initial="initial"
-        animate="animate"
     >
         
         {/* content */}
-        <motion.div className={styles.cardContent}>
+        <motion.div
+            className={styles.cardContent}
+            variants={containerVariants}
+            initial="initial"
+            animate="animate"
+        >
 
-            <motion.p className={styles.cardContentTitle}>
+            <motion.p className={styles.cardContentTitle} variants={itemVariants}>
                 Cozy.
             </motion.p>
 
-            <motion.p className={styles.cardContentSubTitle}>
+            <motion.p className={styles.cardContentSubTitle} variants={itemVariants}>
                 Is the word
             </motion.p>
 
-            <motion.p className={styles.cardContentDescription}>
+            <motion.p className={styles.cardContentDescription} variants={itemVariants}>
                 Start your holidays with more confort and amazing discounts.
             </motion.p>
 
-            <motion.p className={styles.cardContentOff}>
+            <motion.p className={styles.cardContentOff} variants={itemVariants}>
                 From 40% Off
             </motion.p>
 
@@ -61,7 +63,7 @@ const DiscountCard = ({ scrollToShop }: DiscountCardProps) => {
         </motion.div>
 
         {/* image */}
-        <motion.div variants={itemVariants} className={styles.imageContainer}>
+        <motion.div variants={containerVariants} className={styles.imageContainer}>
             <Image
                 src={'/assets/cozy-2.jpg'}
                 alt='Discount Image'
@@ -74,7 +76,7 @@ const DiscountCard = ({ scrollToShop }: DiscountCardProps) => {
         </motion.div>
 
 
-    </motion.div>
+    </div>
   )
 }
 
