@@ -1,6 +1,6 @@
 "use client"
 import React from 'react'
-import { Button, Divider, IconButton, InputBase, Paper } from '@mui/material'
+import { Button, InputBase, Paper } from '@mui/material'
 import { motion } from 'framer-motion'
 import { useWindowWidth } from '@react-hook/window-size'
 import { MdSearch, } from 'react-icons/md'
