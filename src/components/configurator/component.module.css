@@ -1,0 +1,56 @@
+
+
+
+.configurator {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+
+    display: flex;
+    align-items: center;
+    -webkit-user-select: none; /* Safari */
+    -ms-user-select: none; /* IE 10 and IE 11 */
+    user-select: none; /* Standard syntax */
+    pointer-events: none;
+
+    @media screen and (min-width: 1000px) {
+        
+    }
+}
+
+.configuratorContent {
+    max-width: 640px;
+    padding: 2rem 1rem;
+    min-width: 320px;
+    margin: 1rem auto;
+    align-self: flex-end;
+
+    background-color: rgba(255, 255, 255, .2);
+    backdrop-filter: blur(10px);
+
+    border-radius: .5rem;
+    pointer-events: all;
+
+    overflow: hidden;
+
+    @media screen and (min-width: 1000px) {
+        margin: auto 1rem auto auto;
+        
+    }
+}
+
+.configuratorContentTitle {
+    margin-bottom: .2rem;
+}
+
+.configuratorContentSubTitle {
+    color: var(--secondary-color);
+    margin-bottom: 1rem;
+}
+
+.configuratorContentCtas {
+    display: flex;
+    justify-content: center;
+}
