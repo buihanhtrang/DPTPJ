@@ -1,0 +1,32 @@
+
+
+.color_section {
+    margin-bottom: 1.2rem;
+}
+
+.color_section__title {
+    margin-bottom: .6rem;
+    -webkit-user-select: none; /* Safari */
+    -ms-user-select: none; /* IE 10 and IE 11 */
+    user-select: none; /* Standard syntax */
+}
+
+.color_section__color {
+
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 50%;
+
+    transition: 300ms all;
+}
+
+.color_section__color_selected {
+    border: 2px solid white;
+    transform: scale(2);
+}
+
+.color_section__color_container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5rem;
+}
