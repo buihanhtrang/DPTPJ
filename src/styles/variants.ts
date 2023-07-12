@@ -81,6 +81,25 @@ export const logoContainerVariants = {
 }
 
 
+export const scaledLogoContainerVariants = {
+    initial: {
+        opacity: 0,
+        scale: 1,
+    },
+    animate: {
+        opacity: 1,
+        scale: 2.4,
+        transition: {
+            when: "beforeChildren",
+            delay: 1,
+            staggerChildren: 0.1,
+        },
+    },
+    exit: {
+        opacity: 0,
+    }
+}
+
 export const logoVariants = {
     initial: {
         strokeDashoffset: 1,
