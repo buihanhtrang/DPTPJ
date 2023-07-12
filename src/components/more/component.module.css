@@ -73,7 +73,7 @@
     font-weight: bold;
     color: var(--primary-color);
 
-    margin-bottom: 1rem;
+    margin-bottom: .5rem;
 
 
     @media screen and (min-width: 800px) {
@@ -95,7 +95,7 @@
 
 .cardContentDescription {
     max-width: 560px;
-    margin-bottom: .8rem;
+    margin-bottom: 1rem;
 
     text-align: center;
 }
@@ -109,7 +109,7 @@
     margin: .5rem 0;
     padding: .5rem 1rem;
 
-    border-radius: var(--border-radius-md);
+    border-radius: var(--border-radius-sm);
 }
 
 
