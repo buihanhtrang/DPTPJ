@@ -41,6 +41,11 @@
     color: var(--primary-color);
 
     margin-bottom: 1rem;
+
+
+    @media screen and (min-width: 800px) {
+        font-size: 5.6rem;
+    }
 }
 
 .cardContentSubTitle {
