@@ -38,6 +38,15 @@ export const itemVariants = {
     },
 }
 
+export const slideUpVariants = {
+    initial: {
+        y: 120,
+    },
+    animate: {
+        y: 0,
+    },
+}
+
 export const bouncingItemVariants = {
     initial: {
         y: 60,
