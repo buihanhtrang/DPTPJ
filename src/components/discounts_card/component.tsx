@@ -1,15 +1,17 @@
 "use client"
 import React from 'react'
-import { Button, InputBase, Paper } from '@mui/material'
+import { Button, } from '@mui/material'
+import Image from 'next/image'
 import { motion } from 'framer-motion'
-import { useWindowWidth } from '@react-hook/window-size'
-import { MdSearch, } from 'react-icons/md'
 
 // styles
 import { containerVariants, itemVariants, } from '@/styles/variants'
 import styles from './component.module.css'
-import Image from 'next/image'
 
+
+const LoaderProp =({ src }) => {
+    return src;
+}
 
 type DiscountCardProps = {
     scrollToShop: ()=> void
@@ -23,6 +25,7 @@ const DiscountCard = ({ scrollToShop }: DiscountCardProps) => {
         animate="animate"
     >
         
+        {/* content */}
         <motion.div className={styles.cardContent}>
 
             <motion.p className={styles.cardContentTitle}>
@@ -47,6 +50,9 @@ const DiscountCard = ({ scrollToShop }: DiscountCardProps) => {
                     disableElevation
                     onClick={()=> scrollToShop()}
                     size='large'
+                    style={{
+                        textTransform: 'none',
+                    }}
                 >
                     Start Shopping
                 </Button>
@@ -54,13 +60,16 @@ const DiscountCard = ({ scrollToShop }: DiscountCardProps) => {
 
         </motion.div>
 
+        {/* image */}
         <motion.div variants={itemVariants} className={styles.imageContainer}>
             <Image
                 src={'/assets/cozy-2.jpg'}
                 alt='Discount Image'
-                width={100}
-                height={200}
+                // width={100}
+                // height={200}
+                fill
                 className={styles.image}
+                loader={LoaderProp}
             />
         </motion.div>
 
