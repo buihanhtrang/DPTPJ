@@ -1,14 +1,19 @@
 
 .card {
     position: relative;
+
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+
     margin: 20vh auto 0 auto;
 
     width: 100%;
-    max-width: 720px;
+    max-width: 1000px;
 
-    height: 320px;
+    height: 80vh;
 
-    border-radius: var(--border-radius-md);
+    /* border-radius: var(--border-radius-md); */
     /* background: var(--primary-gradient);
     background-image: url('/assets/cozy-1.jpg');
     background-repeat: no-repeat;
@@ -28,42 +33,22 @@
     background-position: center 55%; */
 
     overflow: hidden;
+
+    @media screen and (min-width: 800px) {
+        flex-direction: row;
+    }
 }
 
-.cardOverlay {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-
-    background: var(--primary-gradient);
-    opacity: .1;
-}
-
-.cardContentContainer {
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    width: 100%;
-
-    display: flex;
-    justify-content: center;
-
-    z-index: 10;
-
-    transition: .5s;
-}
 
 .cardContent {
+    
+
     /* position: absolute;
     left: 0;
     bottom: 0; */
     margin: 0 auto;
     /* width: 100%; */
     /* max-width: 400px; */
-
-    border-radius: var(--border-radius-md);
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
 
@@ -72,21 +57,53 @@
     background-color: rgba(255, 255, 255, .3);
     backdrop-filter: blur(1px);
 
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-
+    @media screen and (min-width: 800px) {
+        margin-top: 2rem;
+        flex: 1;
+    }
 }
 
 .cardContentTitle {
     font-size: 4rem;
     font-weight: bold;
+    color: var(--primary-color);
+
+    margin-bottom: 1rem;
+}
+
+.cardContentSubTitle {
+    font-size: 2.4rem;
+    font-weight: bold;
+
+    margin-top: -1rem;
+    margin-bottom: .5rem;
 }
 
 .cardContentDescription {
-    text-align: center;
     max-width: 400px;
+    margin-bottom: .5rem;
+}
+
+.cardContentOff {
+    font-weight: bold;
+    color: var(--primary-color);
+    margin-bottom: 2rem;
+}
+
+.imageContainer {
+    max-width: 500px;
+    height: 80vh;
+    width: 100%;
+
+    max-height: 480px;
+
+    overflow: hidden;
+
+    border-radius: var(--border-radius-md);
+
+    @media screen and (min-width: 800px) {
+        flex: 3;
+    }
 }
 
 .image {
@@ -103,6 +120,3 @@
     transform: scale(1.1);
 }
 
-.card:hover .cardContentContainer {
-    opacity: 0;
-}

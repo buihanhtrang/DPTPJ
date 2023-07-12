@@ -10,23 +10,26 @@ import { containerVariants, itemVariants, } from '@/styles/variants'
 import styles from './component.module.css'
 import Image from 'next/image'
 
-const DiscountCard = () => {
+
+type DiscountCardProps = {
+    scrollToShop: ()=> void
+}
+const DiscountCard = ({ scrollToShop }: DiscountCardProps) => {
   return (
-    <div className={styles.card}>
+    <motion.div
+        className={styles.card}
+        variants={containerVariants}
+        initial="initial"
+        animate="animate"
+    >
         
-        <div className={styles.cardContentContainer}>
-        <motion.div
-            className={styles.cardContent}
-            variants={containerVariants}
-            initial="initial"
-            animate="animate"
-        >
+        <motion.div className={styles.cardContent}>
 
             <motion.p className={styles.cardContentTitle}>
-                Cozy
+                Cozy.
             </motion.p>
 
-            <motion.p>
+            <motion.p className={styles.cardContentSubTitle}>
                 Is the word
             </motion.p>
 
@@ -34,21 +37,35 @@ const DiscountCard = () => {
                 Start your holidays with more confort and amazing discounts.
             </motion.p>
 
+            <motion.p className={styles.cardContentOff}>
+                From 40% Off
+            </motion.p>
+
+            <motion.div variants={itemVariants}>
+                <Button
+                    variant='contained'
+                    disableElevation
+                    onClick={()=> scrollToShop()}
+                    size='large'
+                >
+                    Start Shopping
+                </Button>
+            </motion.div>
+
         </motion.div>
-        </div>
-        
-        <Image
-            src={'/assets/cozy-2.jpg'}
-            alt='Discount Image'
-            width={100}
-            height={200}
-            className={styles.image}
-        />
-{/* 
-        <div className={styles.cardOverlay} /> */}
+
+        <motion.div variants={itemVariants} className={styles.imageContainer}>
+            <Image
+                src={'/assets/cozy-2.jpg'}
+                alt='Discount Image'
+                width={100}
+                height={200}
+                className={styles.image}
+            />
+        </motion.div>
 
 
-    </div>
+    </motion.div>
   )
 }
 
