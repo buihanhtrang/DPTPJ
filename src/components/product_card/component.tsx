@@ -15,6 +15,9 @@ import { containerVariants, itemVariants, slideUpVariants, } from '@/styles/vari
 import styles from './component.module.css'
 
 
+const LoaderProp =({ src }) => {
+    return src;
+}
 
 type ProductCardProps = {
     product: IProduct
@@ -39,6 +42,7 @@ const ProductCard = ({ product: { image, name, description, discount, href, }, }
                 width={100}
                 height={200}
                 className={styles.image}
+                loader={LoaderProp}
             />
 
 
@@ -66,6 +70,9 @@ const ProductCard = ({ product: { image, name, description, discount, href, }, }
                                 disableElevation
                                 href={href}
                                 size='large'
+                                style={{
+                                    textTransform: 'none',
+                                }}
                             >
                                 Buy Now
                             </Button>
@@ -80,6 +87,9 @@ const ProductCard = ({ product: { image, name, description, discount, href, }, }
                                 disableElevation
                                 href={href}
                                 size='large'
+                                style={{
+                                    textTransform: 'none',
+                                }}
                             >
                                 Buy Now
                             </Button>
