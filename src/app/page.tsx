@@ -20,19 +20,22 @@ import { containerVariants, itemVariants } from '@/styles/variants'
 import styles from './page.module.css'
 
 
+
+
+
 const products: Array<IProduct> = [
   {
     image: '/assets/cozy-1.jpg',
     // image: '/assets/round-chair-4.jpeg',
     name: 'Round Chair',
-    description: 'Some Description here',
+    description: 'Decadently soft microfiber lends big-time comfort and style. A warm, welcoming contemporary design is on full display.',
     discount: 78,
     href: '/round'
   },
   {
     image: '/assets/small-sofa-1.jpg',
     name: 'Sofa Chair',
-    description: 'Some Description here',
+    description: 'Fun faux fur toss pillows bring a bit of glam. A matching faux fur ottoman is available separately.',
     discount: 56,
     href: '/armchair'
   },
