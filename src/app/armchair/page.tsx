@@ -25,7 +25,7 @@ const PillowColor = "Pillow Color"
 const BodyColor = "Body Color"
 const ArmChairPage = () => {
     const width = useWindowWidth()
-    const isMobile = width < 1000
+    const isMobile = width < 800
 
     const [isConfiguratorOpen, setIsConfiguratorOpen] = useState(true)
 

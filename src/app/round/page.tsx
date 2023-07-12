@@ -24,7 +24,7 @@ const SeatingColor = "Seat Color"
 const BodyColor = "Body Color"
 const RoundChairPage = () => {
     const width = useWindowWidth()
-    const isMobile = width < 1000
+    const isMobile = width < 800
 
     const [isConfiguratorOpen, setIsConfiguratorOpen] = useState(true)
 
