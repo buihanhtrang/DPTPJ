@@ -36,6 +36,8 @@
 .appName {
     font-weight: bold;
     font-size: x-large;
+
+    color: var(--primary-color);
 }
 
 .search {

@@ -36,7 +36,7 @@ const Appbar = () => {
                         d="M2 20L24 3L46 20V41H2V20Z"
                         fill="white"
                         stroke="#F1A614"
-                        strokeWidth="6"
+                        strokeWidth="8"
                         pathLength={1}
                         strokeDasharray="1 1"
                         variants={logoVariants}
@@ -46,7 +46,7 @@ const Appbar = () => {
                 {
                     !isMobile &&
                         <motion.p variants={itemVariants} className={styles.appName}>
-                            Ashleys Furniture
+                            Ashley&apos;s
                         </motion.p>
                 }
             </motion.div>
@@ -75,9 +75,12 @@ const Appbar = () => {
                     disableElevation
                     href='/'
                     variant='contained'
+                    style={{
+                        textTransform: 'none',
+                    }}
                 >
                     {
-                        isMobile ? "More" : "Shop More"
+                        isMobile ? "Shop" : "Shop More"
                     }
                 </Button>
             </motion.div>
