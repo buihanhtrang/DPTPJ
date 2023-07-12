@@ -7,7 +7,7 @@ import { createTheme } from '@mui/material/styles'
 const theme = createTheme({
   palette: {
     primary: {
-      main: orange.A700,
+      main: deepOrange.A200,
     },
     secondary: {
       main: teal[400],
@@ -29,7 +29,7 @@ const theme = createTheme({
   },
 
   shape: {
-    borderRadius: 12
+    borderRadius: 8,
   },
 })
 
