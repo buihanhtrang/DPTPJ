@@ -4,11 +4,16 @@
 }
 
 .pageContent {
-    padding: 0 10vw;
+    padding: 0 5vw;
+
+    @media screen and (min-width: 800px) {
+        padding: 0 10vw;
+    }
 }
 
 .productSectionTitle {
     margin-bottom: 1rem;
+    margin-top: 12vh;
 }
 
 .productGrid {

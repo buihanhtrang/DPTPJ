@@ -20,7 +20,7 @@ const products: Array<IProduct> = [
     href: '/'
   },
   {
-    image: '/assets/cozy-2.jpg',
+    image: '/assets/small-sofa-1.jpg',
     name: 'Sofa Chair',
     description: 'Some Description here',
     discount: 56,
@@ -51,13 +51,12 @@ export default function Home() {
         <DiscountCard scrollToShop={scrollToShop} />
 
 
-        <div ref={shopRef} />
-
+        {/* <div ref={shopRef} /> */}
 
         {/* list of product sections */}
 
         {/* top deals section */}
-        <motion.h1 variants={itemVariants} className={styles.productSectionTitle}>
+        <motion.h1 ref={shopRef} variants={itemVariants} className={styles.productSectionTitle}>
           Top Deals
         </motion.h1>
         <motion.div className={styles.productGrid} variants={containerVariants}>
