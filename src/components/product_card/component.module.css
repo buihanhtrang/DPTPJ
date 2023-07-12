@@ -1,0 +1,132 @@
+
+.card {
+    position: relative;
+
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+
+    width: 100%;
+    max-width: 480px;
+
+    height: 360px;
+
+    border-radius: var(--border-radius-md);
+    background-color: teal;
+
+
+    /* background: var(--primary-gradient);
+    background-image: url('/assets/cozy-1.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center 55%; */
+
+    /* background-image: linear-gradient(
+            to bottom,
+            var(--primary-color),
+            var(--secondary-color),
+        ),
+        url('/assets/cozy-1.jpg'); */
+
+    /* background-image: linear-gradient(
+            to bottom, rgba(245, 246, 252, 0.52), rgba(117, 19, 93, 0.73)),
+    url('/assets/cozy-1.jpg');
+    background-position: center 55%; */
+
+    overflow: hidden;
+
+    @media screen and (min-width: 800px) {
+        flex-direction: row;
+    }
+}
+
+
+.cardContent {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+
+    height: 100%;
+    width: 100%;
+
+    background-color: rgba(tan, .2);
+
+    padding: 1rem;
+
+    z-index: 20;
+
+    color: white;
+    background-image: linear-gradient(
+        to bottom,
+        transparent,
+        rgba(0, 0, 0, .2),
+        rgba(0, 0, 0, .8)
+    );
+
+    @media screen and (min-width: 800px) {
+
+    }
+}
+
+.cardContentTitle {
+    font-size: 2rem;
+    font-weight: bold;
+    color: var(--primary-color);
+
+    margin-bottom: .3rem;
+}
+
+.cardContentDescription {
+    max-width: 400px;
+    margin-bottom: .5rem;
+}
+
+.cardContentCta {
+    margin-left: auto;
+    transition: .4s;
+
+    @media screen and (min-width: 800px) {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+}
+
+.cardContentOff {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    
+    padding: .5rem 1rem;
+
+    font-weight: bold;
+
+    background-color: white;
+    color: var(--primary-color);
+
+    border-radius: var(--border-radius-md);
+}
+
+
+.image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+    
+    transition: .5s;
+}
+
+.card:hover .image {
+    transform: scale(1.1);
+}
+
+.card:hover .cardContentCta {
+
+    transform: translateY(0);
+    @media screen and (min-width: 800px) {
+        opacity: 1;
+    }
+}
