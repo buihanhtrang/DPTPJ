@@ -13,6 +13,7 @@ import { IProduct } from '@/models/product'
 // styles
 import { containerVariants, itemVariants, slideUpVariants, } from '@/styles/variants'
 import styles from './component.module.css'
+import Link from 'next/link'
 
 
 const LoaderProp =({ src }) => {
@@ -24,7 +25,7 @@ type ProductCardProps = {
 }
 const ProductCard = ({ product: { image, name, description, discount, href, }, }: ProductCardProps) => {
     const width = useWindowWidth()
-    const isMobile = width < 1000
+    const isMobile = width < 800
 
 
     return (
@@ -82,17 +83,18 @@ const ProductCard = ({ product: { image, name, description, discount, href, }, }
                 {
                     !isMobile &&
                         <div className={styles.cardContentCta}>
-                            <Button
-                                variant='contained'
-                                disableElevation
-                                href={href}
-                                size='large'
-                                style={{
-                                    textTransform: 'none',
-                                }}
-                            >
-                                Buy Now
-                            </Button>
+                            <Link href={href}>
+                                <Button
+                                    variant='contained'
+                                    disableElevation
+                                    size='large'
+                                    style={{
+                                        textTransform: 'none',
+                                    }}
+                                >
+                                    Buy Now
+                                </Button>
+                            </Link>
                         </div>
                 }
 
