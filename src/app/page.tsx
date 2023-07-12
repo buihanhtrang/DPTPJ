@@ -1,15 +1,23 @@
 "use client"
 
-import Image from 'next/image'
-import styles from './page.module.css'
+import { useRef } from 'react';
+import { motion } from 'framer-motion'
+import Link from 'next/link'
+
+// component
+import ProductCard from '@/components/product_card/component'
 import Appbar from '@/components/appbar/component'
 import DiscountCard from '@/components/discounts_card/component'
-import { useRef } from 'react';
-import ProductCard from '@/components/product_card/component'
-import { motion } from 'framer-motion'
-import { IProduct } from '@/models/product'
-import { containerVariants, itemVariants } from '@/styles/variants'
 
+// models
+import { IProduct } from '@/models/product'
+
+// styles
+import { containerVariants, itemVariants } from '@/styles/variants'
+import styles from './page.module.css'
+import MoreCard from '@/components/more/component';
+import Fab from '@mui/material/Fab';
+import { MdKeyboardArrowRight } from 'react-icons/md';
 
 const products: Array<IProduct> = [
   {
@@ -17,14 +25,14 @@ const products: Array<IProduct> = [
     name: 'Round Chair',
     description: 'Some Description here',
     discount: 78,
-    href: '/'
+    href: '/round'
   },
   {
     image: '/assets/small-sofa-1.jpg',
     name: 'Sofa Chair',
     description: 'Some Description here',
     discount: 56,
-    href: '/'
+    href: '/armchair'
   },
 ]
 export default function Home() {
@@ -56,19 +64,38 @@ export default function Home() {
         {/* list of product sections */}
 
         {/* top deals section */}
-        <motion.h1 ref={shopRef} variants={itemVariants} className={styles.productSectionTitle}>
-          Top Deals
-        </motion.h1>
+        <motion.div
+          className={styles.productSectionTitleContainer}
+          variants={containerVariants}
+        >
+          
+          {/* title */}
+          <motion.h1 ref={shopRef} variants={itemVariants} className={styles.productSectionTitle}>
+            Top Deals
+          </motion.h1>
+
+          {/* more */}
+          <Fab color="primary" aria-label="More" size='small'>
+            <MdKeyboardArrowRight />
+          </Fab>
+
+        </motion.div>
         <motion.div className={styles.productGrid} variants={containerVariants}>
           {
             products.map((product, i)=> {
 
               return (
-                <ProductCard key={i} product={product} />
+                <motion.div key={i}>
+                  <Link href={product.href}>
+                      <ProductCard product={product} />
+                  </Link>
+                </motion.div>
               )
             })
           }
         </motion.div>
+
+        <MoreCard />
 
 
       </motion.div>

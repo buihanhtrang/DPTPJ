@@ -11,9 +11,16 @@
     }
 }
 
-.productSectionTitle {
-    margin-bottom: 1rem;
+.productSectionTitleContainer {
     margin-top: 12vh;
+    margin-bottom: 1rem;
+    
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.productSectionTitle {
 }
 
 .productGrid {
@@ -21,3 +28,4 @@
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 1rem;
 }
+
