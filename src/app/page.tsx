@@ -1,13 +1,16 @@
 "use client"
-
 import { useRef } from 'react';
 import { motion } from 'framer-motion'
 import Link from 'next/link'
+import Fab from '@mui/material/Fab';
+import { MdKeyboardArrowRight } from 'react-icons/md';
 
 // component
 import ProductCard from '@/components/product_card/component'
 import Appbar from '@/components/appbar/component'
 import DiscountCard from '@/components/discounts_card/component'
+import DeveloperInfo from '@/components/developer/component';
+import MoreCard from '@/components/more/component';
 
 // models
 import { IProduct } from '@/models/product'
@@ -15,13 +18,12 @@ import { IProduct } from '@/models/product'
 // styles
 import { containerVariants, itemVariants } from '@/styles/variants'
 import styles from './page.module.css'
-import MoreCard from '@/components/more/component';
-import Fab from '@mui/material/Fab';
-import { MdKeyboardArrowRight } from 'react-icons/md';
+
 
 const products: Array<IProduct> = [
   {
     image: '/assets/cozy-1.jpg',
+    // image: '/assets/round-chair-4.jpeg',
     name: 'Round Chair',
     description: 'Some Description here',
     discount: 78,
@@ -95,8 +97,18 @@ export default function Home() {
           }
         </motion.div>
 
+        {/* more info */}
         <MoreCard />
 
+        {/* developer info */}
+        {/* title */}
+        <motion.h1 ref={shopRef} variants={itemVariants} className={styles.developerSectionTitle}>
+          About The Developer
+        </motion.h1>
+        <motion.h2 ref={shopRef} variants={itemVariants} className={styles.developerSectionSubTitle}>
+          Felix.
+        </motion.h2>
+        <DeveloperInfo />
 
       </motion.div>
 

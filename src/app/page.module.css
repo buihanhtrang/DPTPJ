@@ -29,3 +29,12 @@
     gap: 1rem;
 }
 
+.developerSectionTitle {
+    text-align: center;
+}
+
+.developerSectionSubTitle {
+    color: var(--primary-color);
+    text-align: center;
+}
+
