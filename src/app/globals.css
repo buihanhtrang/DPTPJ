@@ -4,8 +4,8 @@
   --border-radius-md: 12px;
   --border-radius-lg: 16px;
 
-  --primary-color: #F28705;
-  --secondary-color: #77CFD9;
+  --primary-color: #77CFD9;
+  --secondary-color: #b067ff;
   --tertiary-color: #087F8C;
 
   --font-mono: ui-monospace, Menlo, Monaco, 'Cascadia Mono', 'Segoe UI Mono',
@@ -13,8 +13,8 @@
     'Fira Mono', 'Droid Sans Mono', 'Courier New', monospace;
 
   --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+  --background-start-rgb: 240, 243, 244; /* Almost white */
+  --background-end-rgb: 255, 255, 255;  /* Pure white */
 
   --primary-glow: conic-gradient(
     from 180deg at 50% 50%,

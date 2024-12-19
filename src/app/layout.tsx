@@ -6,8 +6,8 @@ import Providers from './providers'
 const inter = Open_Sans({ subsets: ['latin'], })
 
 export const metadata: Metadata = {
-  title: 'Ashleys Furniture',
-  description: 'Ashleys Furniture App',
+  title: 'H2TL Electronic',
+  description: 'H2TL Electronic Shop',
 }
 
 export default function RootLayout({

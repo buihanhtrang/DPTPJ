@@ -26,18 +26,17 @@ import styles from './page.module.css'
 const products: Array<IProduct> = [
   {
     image: '/assets/cozy-1.jpg',
-    // image: '/assets/round-chair-4.jpeg',
     name: 'Round Chair',
     description: 'Decadently soft microfiber lends big-time comfort and style. A warm, welcoming contemporary design is on full display.',
     discount: 78,
     href: '/round'
   },
   {
-    image: '/assets/small-sofa-1.jpg',
-    name: 'Sofa Chair',
-    description: 'Fun faux fur toss pillows bring a bit of glam. A matching faux fur ottoman is available separately.',
+    image: '/assets/laptop-1.jpg',
+    name: 'Computer',
+    description: 'Alien laptop is a specialized personal computer designed for playing PC games at high standards by using high-performance graphics cards, a high core-count CPU with higher raw performance and higher-performance RAM.',
     discount: 56,
-    href: '/armchair'
+    href: '/computer'
   },
 ]
 export default function Home() {
@@ -109,7 +108,9 @@ export default function Home() {
           About The Developer
         </motion.h1>
         <motion.h2 ref={shopRef} variants={itemVariants} className={styles.developerSectionSubTitle}>
-          Felix.
+          H2TL Computer Shop
+          Digital Mulimedia Content Programming
+          Final Project - 2024
         </motion.h2>
         <DeveloperInfo />
 

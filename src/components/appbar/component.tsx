@@ -23,20 +23,30 @@ const Appbar = () => {
         >
             
             <motion.div variants={containerVariants} className={styles.appbarLogoSection}>
-                <motion.svg
-                    width="40"
+            <motion.svg
+                    width="80"
                     height="40"
-                    viewBox="0 0 48 43"
+                    viewBox="0 0 30 60"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
                     variants={logoContainerVariants}
                     className={styles.logo}
                 >
                     <motion.path
-                        d="M2 20L24 3L46 20V41H2V20Z"
-                        fill="white"
-                        stroke="#F1A614"
-                        strokeWidth="8"
+                        d="M8 12 H56 V42 H8 V12 Z"
+                        fill="#000"
+                        stroke="#05def2"
+                        strokeWidth="3"
+                        pathLength={1}
+                        strokeDasharray="1 1"
+                        variants={logoVariants}
+                    />
+
+                    <motion.path
+                        d="M4 44 H60 V50 H4 V44 Z"
+                        fill="#fff"
+                        stroke="#05def2"
+                        strokeWidth="3"
                         pathLength={1}
                         strokeDasharray="1 1"
                         variants={logoVariants}
@@ -46,7 +56,7 @@ const Appbar = () => {
                 {
                     !isMobile &&
                         <motion.p variants={itemVariants} className={styles.appName}>
-                            Ashley&apos;s
+                            H2TL Shop
                         </motion.p>
                 }
             </motion.div>
@@ -63,8 +73,8 @@ const Appbar = () => {
                             <MdSearch fontSize="24" color='gray' style={{ marginRight: '.5rem' }} />
                         }
                         sx={{ ml: 1, flex: 1, p: '.2rem' }}
-                        placeholder="Search round chair..."
-                        inputProps={{ 'aria-label': 'search ashleys furniture' }}
+                        placeholder="Search your product..."
+                        inputProps={{ 'aria-label': 'search your future product' }}
                     />
                 </Paper>
             </motion.div>
@@ -80,7 +90,7 @@ const Appbar = () => {
                     }}
                 >
                     {
-                        isMobile ? "Shop" : "Shop More"
+                        isMobile ? "Home" : "HomePage"
                     }
                 </Button>
             </motion.div>

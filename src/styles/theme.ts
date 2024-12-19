@@ -1,4 +1,4 @@
-import { red, orange, deepOrange, teal, }from '@mui/material/colors'
+import { blue, deepPurple, teal, }from '@mui/material/colors'
 import { createTheme } from '@mui/material/styles'
 
 
@@ -7,21 +7,21 @@ import { createTheme } from '@mui/material/styles'
 const theme = createTheme({
   palette: {
     primary: {
-      main: deepOrange.A200,
+      main: deepPurple.A100,
     },
     secondary: {
       main: teal[400],
     },
 
     common: {
-        black: '#1E1E1E',
+      white: '#E5E5E5',
     },
     
     error: {
-      main: red.A400,
+      main: blue.A400,
     },
     warning: {
-      main: red.A100,
+      main: blue.A100,
     },
     background: {
       default: '#fff',

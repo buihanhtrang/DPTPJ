@@ -72,7 +72,7 @@ const MoreCard = () => {
                     </motion.p>
 
                     <motion.p className={styles.cardContentDescription} variants={itemVariants}>
-                        This 3D version of Ashley&apos;s Furniture is still in beta. We will be updating it gradually to reflect all products. Beta period will end in 2024.
+                        This 3D version of H2TL Electronic Shop is still in beta. We will be updating it gradually to reflect all products. Beta period will end in 2024.
                     </motion.p>
 
                     <motion.div className={styles.cardContentOff} variants={itemVariants}>

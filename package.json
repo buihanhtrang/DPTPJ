@@ -1,5 +1,5 @@
 {
-  "name": "ashleys",
+  "name": "dptpj",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -24,7 +24,7 @@
     "eslint-config-next": "13.4.9",
     "framer-motion": "^10.12.18",
     "moment": "^2.29.4",
-    "next": "13.4.9",
+    "next": "^13.4.9",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-icons": "^4.10.1",

@@ -1,0 +1,22 @@
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="40"
+    height="40"
+    viewBox="0 0 64 64"
+    fill="none"
+>
+    <!-- Laptop screen -->
+    <path 
+        d="M8 12 H56 V42 H8 V12 Z" 
+        fill="#000" 
+        stroke="#F1A614" 
+        stroke-width="3" 
+    />
+    <!-- Laptop base -->
+    <path 
+        d="M4 44 H60 V50 H4 V44 Z" 
+        fill="#000" 
+        stroke="#F1A614" 
+        stroke-width="3" 
+    />
+</svg>

@@ -21,7 +21,7 @@ import { itemVariants } from '@/styles/variants'
 
 
 const SeatingColor = "Seat Color"
-const BodyColor = "Body Color"
+const bodyColor = "Body Color"
 const RoundChairPage = () => {
     const width = useWindowWidth()
     const isMobile = width < 800
@@ -31,7 +31,7 @@ const RoundChairPage = () => {
     const [ configOptions, setConfigOptions ] = useState<Array<IConfiguratorOption>>(
         [
             {
-                title: BodyColor,
+                title: bodyColor,
                 colors: [ '#1e1e1e', '#A58962', 'white', '#E9D69E', '#87898C', '#A4A5A6', '#BA3B2E' ],
                 selectedColor: '#E9D69E'
             },
@@ -55,8 +55,8 @@ const RoundChairPage = () => {
         })
     }
 
-    const getBodyColor = ()=> {
-        return configOptions.find(c=> c.title === BodyColor)!.selectedColor
+    const getbodyColor = ()=> {
+        return configOptions.find(c=> c.title === bodyColor)!.selectedColor
     }
 
     const getSeatingColor = ()=> {
@@ -86,7 +86,7 @@ const RoundChairPage = () => {
 
                 <group position={isMobile ? [ .3, isConfiguratorOpen ? -.5 : -1.8, -2 ] : [ -.5, -2, -2 ]} scale={isMobile ? 1.3 : 2} rotation-y={ Math.PI / 1.6 }>
                     <RoundChair
-                        bodyColor={getBodyColor()}
+                        bodyColor={getbodyColor()}
                         seatingColor={getSeatingColor()}
                     />
                 </group>
