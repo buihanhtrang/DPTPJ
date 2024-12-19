@@ -1,0 +1,11 @@
+npm i @react-three/fiber  
+npm install three @types/three @react-three/fiber              
+npm install @react-three/drei           
+npm i sass        
+npm i @react-hook/window-size            
+npm install moment   
+npm install @mui/material @emotion/react @emotion/styled            
+npm install react-icons --save
+npm install motion  
+
+chạy bằng: npm run dev
