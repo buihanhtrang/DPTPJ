@@ -132,7 +132,7 @@
 }
 
 .card:hover .logoPath {
-    fill: white;
+    fill: #05def2;
     stroke: none;
     /* stroke: var(--primary-color); */
 }

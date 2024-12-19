@@ -36,21 +36,32 @@ const MoreCard = () => {
                 animate="animate"
                 className={styles.cardContent}
             >
-
                 <motion.svg
-                    width="40"
-                    height="43"
-                    viewBox="0 0 48 43"
+                    width="100"
+                    height="50"
+                    viewBox="0 0 60 60"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
                     variants={scaledLogoContainerVariants}
                     className={styles.logo}
                 >
                     <motion.path
-                        d="M2 20L24 3L46 20V41H2V20Z"
+                        d="M8 12 H56 V42 H8 V12 Z"
                         fill="transparent"
-                        stroke="white"
-                        strokeWidth="8"
+                        stroke="#05def2"
+                        strokeWidth="6"
+                        pathLength={1}
+                        strokeDasharray="1 1"
+                        variants={logoVariants}
+                        className={styles.logoPath}
+
+                    />
+
+                    <motion.path
+                        d="M4 44 H60 V50 H4 V44 Z"
+                        fill="transparent"
+                        stroke="#05def2"
+                        strokeWidth="4"
                         pathLength={1}
                         strokeDasharray="1 1"
                         variants={logoVariants}
@@ -76,7 +87,7 @@ const MoreCard = () => {
                     </motion.p>
 
                     <motion.div className={styles.cardContentOff} variants={itemVariants}>
-                        { moment(new Date("2024-01-01")).fromNow() }
+                        { moment(new Date("2024-12-20")).fromNow() }
                     </motion.div>
 
                     </motion.div>

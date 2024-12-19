@@ -25,7 +25,7 @@ const DeveloperInfo = () => {
                 </motion.div>
             </Link>
 
-            <Link href='https://www.github.com/buihanhtrang/' target='_blank'>
+            <Link href='https://github.com/buihanhtrang/DPTPJ' target='_blank'>
                 <motion.div variants={itemVariants} className={styles.sectionCard}>
                     <FaGithub />
                 </motion.div>
