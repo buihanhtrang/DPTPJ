@@ -1,0 +1,61 @@
+.compareModal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90%;
+  max-width: var(--max-width);
+  height: 80%;
+  background: rgba(var(--background-start-rgb), 0.95);
+  border-radius: var(--border-radius-lg);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  z-index: 1100;
+  padding: 2rem;
+  overflow-y: auto;
+}
+
+.compareModal table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--font-mono);
+}
+
+.compareModal th,
+.compareModal td {
+  padding: 1rem;
+  text-align: center;
+  border: 1px solid rgba(var(--foreground-rgb), 0.1);
+}
+
+.compareModal th {
+  background: var(--primary-color);
+  color: white;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+.compareModal td {
+  background: rgba(var(--tile-start-rgb), 0.8);
+}
+
+.compareModal img {
+  width: 100px;
+  height: auto;
+  border-radius: var(--border-radius-sm);
+}
+
+.compareModal .closeButton {
+  position: sticky;
+  top: 1rem;
+  left: 100rem;
+  background: var(--secondary-color);
+  color: white;
+  border: none;
+  border-radius: var(--border-radius-sm);
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+}
+
+.compareModal .closeButton:hover {
+  background: var(--tertiary-color);
+}

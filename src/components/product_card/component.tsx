@@ -22,8 +22,9 @@ const LoaderProp =({ src }) => {
 
 type ProductCardProps = {
     product: IProduct
+    onAddToCompare: ()=>void
 }
-const ProductCard = ({ product: { image, name, description, discount, href, }, }: ProductCardProps) => {
+const ProductCard = ({ product: { image, name, description, discount, hreff, }, onAddToCompare}: ProductCardProps) => {
     const width = useWindowWidth()
     const isMobile = width < 800
 
@@ -69,13 +70,27 @@ const ProductCard = ({ product: { image, name, description, discount, href, }, }
                             <Button
                                 variant='contained'
                                 disableElevation
-                                href={href}
+                                href={hreff}
                                 size='large'
                                 style={{
                                     textTransform: 'none',
                                 }}
                             >
-                                Buy Now
+                                Detail
+                            </Button>
+                            <Button
+                                variant='contained'
+                                disableElevation
+                                size='large'
+                                style={{
+                                    textTransform: 'none',
+                                }}
+                                onClick={(e) => {
+                                    e.stopPropagation(); // Ngăn chặn hành vi click bubble lên phần tử cha
+                                    onAddToCompare(); // Gọi hàm thêm vào danh sách so sánh
+                                }}
+                            >
+                                Add to compare
                             </Button>
                         </motion.div>
                 }
@@ -83,18 +98,31 @@ const ProductCard = ({ product: { image, name, description, discount, href, }, }
                 {
                     !isMobile &&
                         <div className={styles.cardContentCta}>
-                            <Link href={href}>
-                                <Button
-                                    variant='contained'
-                                    disableElevation
-                                    size='large'
-                                    style={{
-                                        textTransform: 'none',
-                                    }}
-                                >
-                                    Buy Now
-                                </Button>
-                            </Link>
+                            <Button
+                                variant='contained'
+                                disableElevation
+                                size='large'
+                                href={hreff}
+                                style={{
+                                    textTransform: 'none',
+                                }}
+                            >
+                                Detail
+                            </Button>
+                            <Button
+                                variant='contained'
+                                disableElevation
+                                size='large'
+                                style={{
+                                    textTransform: 'none',
+                                }}
+                                onClick={(e) => {
+                                    e.stopPropagation(); // Ngăn chặn hành vi click bubble lên phần tử cha
+                                    onAddToCompare(); // Gọi hàm thêm vào danh sách so sánh
+                                }}
+                            >
+                                Add to compare
+                            </Button>
                         </div>
                 }
 

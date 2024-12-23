@@ -1,5 +1,5 @@
 "use client"
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 import Fab from '@mui/material/Fab';
@@ -11,6 +11,8 @@ import Appbar from '@/components/appbar/component'
 import DiscountCard from '@/components/discounts_card/component'
 import DeveloperInfo from '@/components/developer/component';
 import MoreCard from '@/components/more/component';
+import CompareTable from "@/components/compare_table/component";
+import CompareBar from "@/components/compare_bar/component";
 
 // models
 import { IProduct } from '@/models/product'
@@ -19,7 +21,7 @@ import { IProduct } from '@/models/product'
 import { containerVariants, itemVariants } from '@/styles/variants'
 import styles from './page.module.css'
 
-
+import computers from "../../public/computer.json"; // JSON file for product details
 
 
 
@@ -29,18 +31,20 @@ const products: Array<IProduct> = [
     name: 'Round Chair',
     description: 'Decadently soft microfiber lends big-time comfort and style. A warm, welcoming contemporary design is on full display.',
     discount: 78,
-    href: '/round'
+    hreff: '/round'
   },
-  {
+  { 
     image: '/assets/laptop-1.jpg',
     name: 'Computer',
     description: 'Alien laptop is a specialized personal computer designed for playing PC games at high standards by using high-performance graphics cards, a high core-count CPU with higher raw performance and higher-performance RAM.',
     discount: 56,
-    href: '/computer'
+    hreff: '/computer'
   },
 ]
 export default function Home() {
   const shopRef = useRef<null | HTMLDivElement>(null)
+  const [compareList, setCompareList] = useState<IProduct[]>([]);
+  const [isCompareOpen, setIsCompareOpen] = useState(false);
 
   const scrollToShop = () => {
     shopRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -86,13 +90,25 @@ export default function Home() {
         </motion.div>
         <motion.div className={styles.productGrid} variants={containerVariants}>
           {
-            products.map((product, i)=> {
+            computers.map((product, i)=> {
 
               return (
                 <motion.div key={i}>
-                  <Link href={product.href}>
-                      <ProductCard product={product} />
-                  </Link>
+                  <ProductCard
+                    product={product} // Load trực tiếp dữ liệu từ JSON
+                    onAddToCompare={() => {
+                        if (compareList.length >= 3) {
+                          alert("You can only compare up to 3 products!");
+                          return;
+                        }
+                    
+                        if (compareList.some((item) => item.name === product.name)) {
+                          alert("This product is already in the comparison list!");
+                          return;
+                        }                    
+                        setCompareList([...compareList, product]);
+                    }} // Gọi hàm thêm vào compare list
+                  />
                 </motion.div>
               )
             })
@@ -116,8 +132,28 @@ export default function Home() {
 
       </motion.div>
 
-      <div style={{ height: '10vh', }} />
+      {/* Compare Bar */}
+      {(compareList.length > 0) && (
+        <div>
+          <CompareBar
+            compareList={compareList}
+            openModal={()=>{setIsCompareOpen(true)}}
+            removeFromCompare={(productToRemove) => {
+              setCompareList(compareList.filter((product) => product !== productToRemove));}}/>
+        </div>
+      )}
 
+      {/* Compare Modal */}
+      {isCompareOpen && (
+        <div>
+          <CompareTable 
+            compareList={compareList}
+            closeModal={()=>{setIsCompareOpen(false)}}/>
+        </div>
+      )}
+
+
+      <div style={{ height: "10vh" }} />
     </div>
-  )
+  );
 }
