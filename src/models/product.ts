@@ -4,5 +4,5 @@ export interface IProduct {
     discount?: number
     description?: string
     image?: string
-    href?: string
+    hreff?: string
 }
