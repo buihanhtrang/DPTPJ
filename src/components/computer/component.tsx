@@ -45,12 +45,15 @@ type ComputerProps = {
   bodyColor?: string
   screenColor?: string
   keyboardColor?: string
+  setShowSSD: React.Dispatch<React.SetStateAction<boolean>>
 }
 interface ColorProps {
     'material-color'?: string
 }
-export function Computer({ bodyColor, screenColor, keyboardColor, }: ComputerProps) {
+export function Computer({ bodyColor, screenColor, keyboardColor, setShowSSD }: ComputerProps) {
   const { nodes, materials } = useGLTF("/assets/gaming_laptop/scene-1.glb") as GLTFResult;
+
+  const buttonRef = React.useRef<THREE.Mesh>(null);
 
   let bodyColorProps: ColorProps = {}
   if(bodyColor != null) {
@@ -79,6 +82,13 @@ export function Computer({ bodyColor, screenColor, keyboardColor, }: ComputerPro
               position={[-1, 0, 0]}
               rotation={[0, 0, (-(Math.PI)*79.082) /180]}
               >
+                <mesh
+                  ref={buttonRef}
+                  position={[0, 0.2, 2]} 
+                  geometry={new THREE.SphereGeometry(0.05, 32, 32)} 
+                  material={new THREE.MeshStandardMaterial({ color: "red" })} 
+                  onClick={() => setShowSSD((prev) => !prev)} 
+                />
                 <mesh
                   name="Object_4"
                   castShadow

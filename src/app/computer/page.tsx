@@ -18,6 +18,7 @@ import { IConfiguratorOption } from '../../models/configuration'
 // styles
 import { itemVariants } from '@/styles/variants'
 import { Computer } from '@/components/computer/component'
+import { StorageSSD } from '@/components/computer/StorageSSD'
 
 
 const keyboardColor = "Keyboard Color"
@@ -27,7 +28,8 @@ const ComputerPage = () => {
     const width = useWindowWidth()
     const isMobile = width < 800
 
-    const [isConfiguratorOpen, setIsConfiguratorOpen] = useState(true)
+    const [isConfiguratorOpen, setIsConfiguratorOpen] = useState(true);
+    const [showSSD, setShowSSD] = useState(false);
 
     const [ configOptions, setConfigOptions ] = useState<Array<IConfiguratorOption>>(
         [
@@ -106,9 +108,14 @@ const ComputerPage = () => {
                         bodyColor={getbodyColor()}
                         keyboardColor={getkeyboardColor()}
                         screenColor={getscreenColor()}
+                        setShowSSD={setShowSSD}
                     />
                 </group>
-
+                {showSSD && (
+                    <group position={[0, 0, 0]}>
+                    <StorageSSD />
+                    </group>
+                )}
                 
                 <group position={[ 0, 1, -9 ]}>
                     <Text3D
