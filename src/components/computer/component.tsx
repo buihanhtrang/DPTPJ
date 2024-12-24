@@ -56,6 +56,12 @@ export function Computer({ bodyColor, screenColor, keyboardColor, setShowSSD }: 
 
   const buttonRef = React.useRef<THREE.Mesh>(null);
 
+  const [isFloating, setIsFloating] = useState(false);
+
+  const { Object16Position } = useSpring({
+    Object16Position: isFloating ? [0, 1, 0] : [0, 0, 0], 
+    config: { mass: 1, tension: 120, friction: 14 },
+  });
   const [isSplit, setIsSplit] = useState(false);
 
   const { Cube001_1, Cube003_2 } = useSpring({
@@ -115,33 +121,6 @@ export function Computer({ bodyColor, screenColor, keyboardColor, setShowSSD }: 
                   anchorY="middle"
                 >
                   1
-                </Text>
-              </mesh>
-              <mesh
-                ref={buttonRef} 
-                position={[-0.1, 0.5, 1.8]}
-                rotation={[-Math.PI / 2, 0, 0]} 
-                onClick={() => setShowSSD((prev) => !prev)}
-                onPointerOver={() => (document.body.style.cursor = "pointer")}
-                onPointerOut={() => (document.body.style.cursor = "default")}
-              >
-                <circleGeometry args={[0.1, 30]} /> 
-                <meshStandardMaterial color="black" transparent opacity={0.6} />
-
-                <mesh>
-                  <ringGeometry args={[0.1, 0.12, 64]} /> 
-                  <meshStandardMaterial color="white" transparent opacity={0.6} />
-                </mesh>
-
-                <Text
-                  rotation={[0, 0, Math.PI / 2]}
-                  position={[0, 0, 0.01]} 
-                  fontSize={0.1}
-                  color="white"
-                  anchorX="center"
-                  anchorY="middle"
-                >
-                  2
                 </Text>
               </mesh>
                 <mesh
@@ -211,6 +190,59 @@ export function Computer({ bodyColor, screenColor, keyboardColor, setShowSSD }: 
                 position={Cube003_2.to((x, y, z) => [x, y, z])}
               >
                 <mesh
+                ref={buttonRef} 
+                position={[-0.1, 0.2, 1.8]}
+                rotation={[0, Math.PI/2, (-(Math.PI)*90) /180]}
+                onClick={() => setShowSSD((prev) => !prev)}
+                onPointerOver={() => (document.body.style.cursor = "pointer")}
+                onPointerOut={() => (document.body.style.cursor = "default")}
+              >
+                <circleGeometry args={[0.1, 30]} /> 
+                <meshStandardMaterial color="black" transparent opacity={0.6} />
+
+                <mesh>
+                  <ringGeometry args={[0.1, 0.12, 64]} /> 
+                  <meshStandardMaterial color="white" transparent opacity={0.6} />
+                </mesh>
+
+                <Text
+                  rotation={[0, 0, Math.PI / 2]}
+                  position={[0, 0, 0.01]} 
+                  fontSize={0.1}
+                  color="white"
+                  anchorX="center"
+                  anchorY="middle"
+                >
+                  2
+                </Text>
+              </mesh>
+              <mesh
+                position={[-0.1, 0.22, -1.8]}
+                rotation={[0, Math.PI/2, (-(Math.PI)*90) /180]}
+                onClick={() => setIsFloating((prev) => !prev)} 
+                onPointerOver={() => (document.body.style.cursor = "pointer")}
+                onPointerOut={() => (document.body.style.cursor = "default")}
+              >
+                <circleGeometry args={[0.1, 30]} />
+                <meshStandardMaterial color="black" transparent opacity={0.6} />
+
+                <mesh>
+                  <ringGeometry args={[0.1, 0.12, 64]} />
+                  <meshStandardMaterial color="white" transparent opacity={0.6} />
+                </mesh>
+
+                <Text
+                  rotation={[0, 0, Math.PI / 2]}
+                  position={[0, 0, 0.01]}
+                  fontSize={0.1}
+                  color="white"
+                  anchorX="center"
+                  anchorY="middle"
+                >
+                  3
+                </Text>
+              </mesh>
+                <mesh
                   name="Object_13"
                   castShadow
                   receiveShadow
@@ -231,12 +263,13 @@ export function Computer({ bodyColor, screenColor, keyboardColor, setShowSSD }: 
                   geometry={nodes.Object_15.geometry}
                   material={materials["Material.009"]}
                 />
-                <mesh
+                <animated.mesh
                   name="Object_16"
                   castShadow
                   receiveShadow
                   geometry={nodes.Object_16.geometry}
                   material={materials.Material_10}
+                  position={Object16Position.to((x, y, z) => [x, y, z])}
                   {...keyboardColorProps}
                 />
                 <mesh
