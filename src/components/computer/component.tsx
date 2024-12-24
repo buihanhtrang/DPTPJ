@@ -1,6 +1,6 @@
 import * as THREE from "three";
 import React from "react";
-import { useGLTF } from "@react-three/drei";
+import { useGLTF, Text } from "@react-three/drei";
 import { GLTF } from "three-stdlib";
 
 
@@ -82,13 +82,33 @@ export function Computer({ bodyColor, screenColor, keyboardColor, setShowSSD }: 
               position={[-1, 0, 0]}
               rotation={[0, 0, (-(Math.PI)*79.082) /180]}
               >
-                <mesh
-                  ref={buttonRef}
-                  position={[0, 0.2, 2]} 
-                  geometry={new THREE.SphereGeometry(0.05, 32, 32)} 
-                  material={new THREE.MeshStandardMaterial({ color: "red" })} 
-                  onClick={() => setShowSSD((prev) => !prev)} 
-                />
+              <mesh
+                ref={buttonRef} 
+                position={[-0.1, 0.5, 1.8]}
+                rotation={[-Math.PI / 2, 0, 0]} 
+                onClick={() => setShowSSD((prev) => !prev)}
+                onPointerOver={() => (document.body.style.cursor = "pointer")}
+                onPointerOut={() => (document.body.style.cursor = "default")}
+              >
+                <circleGeometry args={[0.1, 30]} /> 
+                <meshStandardMaterial color="black" transparent opacity={0.6} />
+
+                <mesh>
+                  <ringGeometry args={[0.1, 0.12, 64]} /> 
+                  <meshStandardMaterial color="white" transparent opacity={0.6} />
+                </mesh>
+
+                <Text
+                  rotation={[0, 0, Math.PI / 2]}
+                  position={[0, 0, 0.01]} 
+                  fontSize={0.1}
+                  color="white"
+                  anchorX="center"
+                  anchorY="middle"
+                >
+                  2
+                </Text>
+              </mesh>
                 <mesh
                   name="Object_4"
                   castShadow

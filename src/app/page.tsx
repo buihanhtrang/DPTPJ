@@ -27,19 +27,11 @@ import computers from "../../public/computer.json"; // JSON file for product det
 
 const products: Array<IProduct> = [
   {
-<<<<<<< HEAD
     image: '/assets/laptop-1.jpg',
     name: 'Computer',
     description: 'Alien laptop is a specialized personal computer designed for playing PC games by using high-performance graphics cards, core-count CPU with higher RAM.',
     discount: 56,
-    href: '/computer'
-=======
-    image: '/assets/cozy-1.jpg',
-    name: 'Round Chair',
-    description: 'Decadently soft microfiber lends big-time comfort and style. A warm, welcoming contemporary design is on full display.',
-    discount: 78,
-    hreff: '/round'
->>>>>>> 394144e4a3fbc4169600bba107571cb3cc3fc7b5
+    hreff: '/computer'
   },
   { 
     image: '/assets/laptop-1.jpg',
