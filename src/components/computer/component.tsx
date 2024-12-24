@@ -145,7 +145,7 @@ export function Computer({ bodyColor, screenColor, keyboardColor, setShowSSD, is
                 </>
               )}
               <group>
-                {visibleInfo === "info1" && (
+                {isInfoVisible && visibleInfo === "info1" && (
                   <group rotation={[Math.PI / 2, Math.PI, -Math.PI/2]} position={[-1, 0.2, -2.8]}>
                     <mesh>
                       <planeGeometry args={[1.8, 1]} />
@@ -175,7 +175,7 @@ export function Computer({ bodyColor, screenColor, keyboardColor, setShowSSD, is
                   </group>
                 )}
 
-                {visibleInfo === "info2" && (
+                {isInfoVisible && visibleInfo === "info2" && (
                   <group rotation={[Math.PI / 2, Math.PI, -Math.PI/2]} position={[-2, 0.2, -2.8]}>
                     <mesh>
                       <planeGeometry args={[1.8, 1]} />
@@ -325,6 +325,75 @@ export function Computer({ bodyColor, screenColor, keyboardColor, setShowSSD, is
                   3
                 </Text>
               </mesh>
+              {isInfoVisible && (
+                  <InfoMesh 
+                    rotation={[-Math.PI/2, 0, 0]} 
+                    position={[1, 0.1, 0]} 
+                    onClick={() => handleInfoToggle("info3")} 
+                  />
+
+              )}
+              <group>
+                {isInfoVisible && visibleInfo === "info3" && (
+                  <group rotation={[Math.PI / 2, Math.PI/2, -Math.PI/2]} position={[2, 0.2, -1.2]}>
+                    <mesh>
+                      <planeGeometry args={[1.8, 1]} />
+                      <meshStandardMaterial color="white" transparent opacity={0.8} />
+                    </mesh>
+                    <Text
+                      fontSize={0.2}
+                      color="black"
+                      position={[0, 0.2, 0.01]} 
+                      anchorX="center"
+                      anchorY="middle"
+                    >
+                      Touchpad{"\n"}
+                    </Text>
+                    <Text
+                      fontSize={0.1}
+                      color="black"
+                      position={[0, -0.1, 0.01]} 
+                      anchorX="center"
+                      anchorY="middle"
+                      textAlign="center"
+                    >
+                      Resolution: 300 DPI {"\n"}
+                      Horizontal: 133mm{"\n"}
+                      Vertical: 90mm
+                    </Text>
+                  </group>
+                )}
+
+                {isFloating && (
+                  <group rotation={[Math.PI / 2, Math.PI/2, -Math.PI/2]} position={[1, 1, -3.0]}>
+                    <mesh>
+                      <planeGeometry args={[1.8, 1]} />
+                      <meshStandardMaterial color="white" transparent opacity={0.8} />
+                    </mesh>
+                    <Text
+                      fontSize={0.2}
+                      color="black"
+                      position={[0, 0.2, 0.01]} 
+                      anchorX="center"
+                      anchorY="middle"
+                    >
+                      Keyboard{"\n"}
+                    </Text>
+                    <Text
+                      fontSize={0.1}
+                      color="black"
+                      position={[0, -0.1, 0.01]} 
+                      anchorX="center"
+                      anchorY="middle"
+                      textAlign="center"
+                    >
+                      3 Bluetooth channel LEDs {"\n"}
+                      Supported by Logi Options {"\n"}
+                      Battery LED
+                    </Text>
+                  </group>
+                )}
+              </group>
                 <mesh
                   name="Object_13"
                   castShadow
