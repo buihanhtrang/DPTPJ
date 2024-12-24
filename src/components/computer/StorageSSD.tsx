@@ -28,13 +28,14 @@ export function StorageSSD() {
     <group
       dispose={null}
       onClick={(e) => {
-        e.stopPropagation(); // Ngăn chặn sự kiện click lan rộng ra toàn scene
-        setShowInfo((prev) => !prev); // Toggle bảng thông tin
+        e.stopPropagation(); 
+        setShowInfo((prev) => !prev); 
       }}
     >
-      {/* Storage Model */}
       <group
-        name="Scene" rotation={[-Math.PI / 1, 1, 0]} scale={0.5} position={[0.5, -1, 2]}
+        name="Scene" rotation={[-Math.PI / 1, 1, 0]} scale={0.3} position={[0.5, -1.1, 2]}
+        onPointerOver={() => (document.body.style.cursor = "pointer")}
+        onPointerOut={() => (document.body.style.cursor = "default")}
       >
         <mesh
           name="Object_4"
@@ -76,7 +77,7 @@ export function StorageSSD() {
       {showInfo && (
         <group rotation={[-Math.PI / 1, 1, Math.PI]} position={[0.5, 1, 2]}>
           <mesh>
-            <planeGeometry args={[1.5, 1]}  />
+            <planeGeometry args={[1.8, 1]}  />
             <meshStandardMaterial color="white" transparent opacity={0.8} />
           </mesh>
           <Text
@@ -86,7 +87,7 @@ export function StorageSSD() {
             anchorX="center"
             anchorY="middle"
           >
-            Storage SSD Info
+            Storage SSD Info{"\n"}
           </Text>
           <Text
             fontSize={0.1}
@@ -95,8 +96,8 @@ export function StorageSSD() {
             anchorX="center"
             anchorY="middle"
           >
-            - Capacity: 1TB {"\n"}
-            - Speed: 3500MB/s
+            Capacity: 1TB {"\n"}{"\n"}
+            Speed: 3500MB/s
           </Text>
         </group>
       )}

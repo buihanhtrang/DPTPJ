@@ -3,6 +3,7 @@
 import { AccumulativeShadows, Environment, Float, Lightformer, OrbitControls, RandomizedLight, Shadow, Stage, Text, Text3D, useHelper } from '@react-three/drei'
 import { Canvas, useFrame } from '@react-three/fiber'
 import React, { useRef, useState } from 'react'
+import { useSpring, a } from '@react-spring/three'
 import * as THREE from 'three'
 import { useWindowWidth } from '@react-hook/window-size'
 import { motion } from 'framer-motion'
@@ -30,6 +31,11 @@ const ComputerPage = () => {
 
     const [isConfiguratorOpen, setIsConfiguratorOpen] = useState(true);
     const [showSSD, setShowSSD] = useState(false);
+
+    const props = useSpring({
+        position: showSSD ? [-0.3, 0, -0.3] : [-3.5, 0, -3.5], 
+        config: { mass: 1, tension: 100, friction: 40 }, 
+    });
 
     const [ configOptions, setConfigOptions ] = useState<Array<IConfiguratorOption>>(
         [
@@ -112,9 +118,9 @@ const ComputerPage = () => {
                     />
                 </group>
                 {showSSD && (
-                    <group position={[0, 0, 0]}>
+                    <a.group position={props.position.to((x, y, z) => [x, y, z])}>
                     <StorageSSD />
-                    </group>
+                    </a.group>
                 )}
                 
                 <group position={[ 0, 1, -9 ]}>
