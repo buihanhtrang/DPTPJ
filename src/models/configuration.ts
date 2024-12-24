@@ -9,3 +9,8 @@ export interface IConfiguration {
     options: IConfiguratorOption
     title: string
 }
+
+export interface DetailConfiguratorOption {
+    Detail: string;
+    Info: string;
+}

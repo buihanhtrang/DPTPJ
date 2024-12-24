@@ -31,15 +31,15 @@ const DiscountCard = ({ scrollToShop }: DiscountCardProps) => {
         >
 
             <motion.p className={styles.cardContentTitle} variants={itemVariants}>
-                Cozy.
+                H2TL ComputerShop
             </motion.p>
 
             <motion.p className={styles.cardContentSubTitle} variants={itemVariants}>
-                Is the word
+                Find your bestfriend
             </motion.p>
 
             <motion.p className={styles.cardContentDescription} variants={itemVariants}>
-                Start your holidays with more confort and amazing discounts.
+                Start your work with more confort and amazing discounts.
             </motion.p>
 
             <motion.p className={styles.cardContentOff} variants={itemVariants}>
@@ -65,7 +65,7 @@ const DiscountCard = ({ scrollToShop }: DiscountCardProps) => {
         {/* image */}
         <motion.div variants={containerVariants} className={styles.imageContainer}>
             <Image
-                src={'/assets/cozy-2.jpg'}
+                src={'/assets/computer-shop.jpeg'}
                 alt='Discount Image'
                 // width={100}
                 // height={200}

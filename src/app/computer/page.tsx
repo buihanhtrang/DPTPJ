@@ -3,6 +3,7 @@
 import { AccumulativeShadows, Environment, Float, Lightformer, OrbitControls, RandomizedLight, Shadow, Stage, Text, Text3D, useHelper } from '@react-three/drei'
 import { Canvas, useFrame } from '@react-three/fiber'
 import React, { useRef, useState } from 'react'
+import { useSpring, a } from '@react-spring/three'
 import * as THREE from 'three'
 import { useWindowWidth } from '@react-hook/window-size'
 import { motion } from 'framer-motion'
@@ -11,6 +12,7 @@ import { motion } from 'framer-motion'
 // components
 import ConfiguratorComponent from '@/components/configurator/component'
 import ColorPickerComponent from '@/components/color_picker/component'
+// import DetailPickerComponent from '@/components/detail_picker/component'
 
 // models
 import { IConfiguratorOption } from '../../models/configuration'
@@ -18,16 +20,24 @@ import { IConfiguratorOption } from '../../models/configuration'
 // styles
 import { itemVariants } from '@/styles/variants'
 import { Computer } from '@/components/computer/component'
+import { StorageSSD } from '@/components/computer/StorageSSD'
 
 
 const keyboardColor = "Keyboard Color"
 const screenColor = "Screen Color"
 const bodyColor = "Body Color"
+
 const ComputerPage = () => {
     const width = useWindowWidth()
     const isMobile = width < 800
 
-    const [isConfiguratorOpen, setIsConfiguratorOpen] = useState(true)
+    const [isConfiguratorOpen, setIsConfiguratorOpen] = useState(true);
+    const [showSSD, setShowSSD] = useState(false);
+
+    const props = useSpring({
+        position: showSSD ? [0, 0, 0] : [-3.5, 0, -3.5], 
+        config: { mass: 1, tension: 100, friction: 40 }, 
+    });
 
     const [ configOptions, setConfigOptions ] = useState<Array<IConfiguratorOption>>(
         [
@@ -49,6 +59,8 @@ const ComputerPage = () => {
         ]
     )
 
+    // const [details, setDetails] = useState<string>("Default Detail")
+
 
     const onSelectedColor = (title: string, color: string) => {
         setConfigOptions((state)=> {
@@ -60,6 +72,10 @@ const ComputerPage = () => {
             })
         })
     }
+
+    // const onDetailChange = (newDetail: string) => {
+    //     setDetails(newDetail);
+    // };
 
     const getbodyColor = ()=> {
         return configOptions.find(c=> c.title === bodyColor)!.selectedColor
@@ -106,9 +122,14 @@ const ComputerPage = () => {
                         bodyColor={getbodyColor()}
                         keyboardColor={getkeyboardColor()}
                         screenColor={getscreenColor()}
+                        setShowSSD={setShowSSD}
                     />
                 </group>
-
+                {showSSD && (
+                    <a.group position={props.position.to((x, y, z) => [x, y, z])}>
+                    <StorageSSD />
+                    </a.group>
+                )}
                 
                 <group position={[ 0, 1, -9 ]}>
                     <Text3D
@@ -120,8 +141,6 @@ const ComputerPage = () => {
                         <meshBasicMaterial color="#059212" />
                     </Text3D>
                 </group>
-
-
             </Canvas>
 
             <ConfiguratorComponent
@@ -143,6 +162,10 @@ const ComputerPage = () => {
                         )
                     })
                 }
+
+                {/* <motion.div variants={itemVariants}> */}
+                    {/* <DetailPickerComponent selectedDetail={details} onDetailChange={onDetailChange} /> */}
+                {/* </motion.div> */}
             </ConfiguratorComponent>
         </div>
     )
