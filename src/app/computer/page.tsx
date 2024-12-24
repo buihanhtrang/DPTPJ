@@ -12,7 +12,6 @@ import { motion } from 'framer-motion'
 // components
 import ConfiguratorComponent from '@/components/configurator/component'
 import ColorPickerComponent from '@/components/color_picker/component'
-import InfoButton from '@/components/showinfo/InfoButton'
 // import DetailPickerComponent from '@/components/detail_picker/component'
 
 // models
@@ -36,8 +35,8 @@ const ComputerPage = () => {
     const [showSSD, setShowSSD] = useState(false);
 
     const props = useSpring({
-        position: showSSD ? [0, 0, 0] : [-2, 0, -3], 
-        config: { mass: 1, tension: 100, friction: 80 }, 
+        position: showSSD ? [0, 0, 0] : [-3.5, 0, -3.5], 
+        config: { mass: 1, tension: 100, friction: 40 }, 
     });
 
     const [ configOptions, setConfigOptions ] = useState<Array<IConfiguratorOption>>(
@@ -144,11 +143,7 @@ const ComputerPage = () => {
                     </Text3D>
                 </group>
             </Canvas>
-            <InfoButton
-                onToggle={(isOn) => {
-                    console.log(`Info button is now: ${isOn ? 'ON' : 'OFF'}`);
-                }}
-            />
+
             <ConfiguratorComponent
                 title='Configure Your'
                 subTitle="Laptop"
