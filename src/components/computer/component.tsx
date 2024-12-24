@@ -191,7 +191,7 @@ export function Computer({ bodyColor, screenColor, keyboardColor, setShowSSD }: 
               >
                 <mesh
                 ref={buttonRef} 
-                position={[-0.1, 0.2, 1.8]}
+                position={[-0.4, 0.2, 1.8]}
                 rotation={[0, Math.PI/2, (-(Math.PI)*90) /180]}
                 onClick={() => setShowSSD((prev) => !prev)}
                 onPointerOver={() => (document.body.style.cursor = "pointer")}
@@ -217,7 +217,7 @@ export function Computer({ bodyColor, screenColor, keyboardColor, setShowSSD }: 
                 </Text>
               </mesh>
               <mesh
-                position={[-0.1, 0.22, -1.8]}
+                position={[-0.2, 0.22, -1.8]}
                 rotation={[0, Math.PI/2, (-(Math.PI)*90) /180]}
                 onClick={() => setIsFloating((prev) => !prev)} 
                 onPointerOver={() => (document.body.style.cursor = "pointer")}
