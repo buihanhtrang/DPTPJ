@@ -11,6 +11,7 @@ import { motion } from 'framer-motion'
 // components
 import ConfiguratorComponent from '@/components/configurator/component'
 import ColorPickerComponent from '@/components/color_picker/component'
+import DetailPickerComponent from '@/components/detail_picker/component'
 
 // models
 import { IConfiguratorOption } from '../../models/configuration'
@@ -23,6 +24,7 @@ import { Computer } from '@/components/computer/component'
 const keyboardColor = "Keyboard Color"
 const screenColor = "Screen Color"
 const bodyColor = "Body Color"
+
 const ComputerPage = () => {
     const width = useWindowWidth()
     const isMobile = width < 800
@@ -49,6 +51,8 @@ const ComputerPage = () => {
         ]
     )
 
+    const [details, setDetails] = useState<string>("Default Detail")
+
 
     const onSelectedColor = (title: string, color: string) => {
         setConfigOptions((state)=> {
@@ -60,6 +64,10 @@ const ComputerPage = () => {
             })
         })
     }
+
+    const onDetailChange = (newDetail: string) => {
+        setDetails(newDetail);
+    };
 
     const getbodyColor = ()=> {
         return configOptions.find(c=> c.title === bodyColor)!.selectedColor
@@ -120,8 +128,6 @@ const ComputerPage = () => {
                         <meshBasicMaterial color="#059212" />
                     </Text3D>
                 </group>
-
-
             </Canvas>
 
             <ConfiguratorComponent
@@ -143,6 +149,10 @@ const ComputerPage = () => {
                         )
                     })
                 }
+
+                <motion.div variants={itemVariants}>
+                    <DetailPickerComponent selectedDetail={details} onDetailChange={onDetailChange} />
+                </motion.div>
             </ConfiguratorComponent>
         </div>
     )

@@ -34,7 +34,7 @@ const products: Array<IProduct> = [
   {
     image: '/assets/laptop-1.jpg',
     name: 'Computer',
-    description: 'Alien laptop is a specialized personal computer designed for playing PC games at high standards by using high-performance graphics cards, a high core-count CPU with higher raw performance and higher-performance RAM.',
+    description: 'Alien laptop is a specialized personal computer designed for playing PC games by using high-performance graphics cards, core-count CPU with higher RAM.',
     discount: 56,
     href: '/computer'
   },

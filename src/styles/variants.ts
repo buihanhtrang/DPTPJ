@@ -1,7 +1,3 @@
-
-
-
-
 export const containerVariants = {
     initial: {
         scale: .8,
