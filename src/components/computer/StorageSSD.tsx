@@ -33,45 +33,55 @@ export function StorageSSD() {
       }}
     >
       {/* Storage Model */}
-      <group
-        name="Scene" rotation={[-Math.PI / 1, 1, 0]} scale={0.5} position={[0.5, -1, 2]}
-      >
-        <mesh
-          name="Object_4"
-          castShadow
-          receiveShadow
-          geometry={nodes.Object_4.geometry}
-          material={materials.Material_1}
-        />
-        <mesh
-          name="Object_5"
-          castShadow
-          receiveShadow
-          geometry={nodes.Object_5.geometry}
-          material={materials.Material_2}
-        />
-        <mesh
-          name="Object_6"
-          castShadow
-          receiveShadow
-          geometry={nodes.Object_6.geometry}
-          material={materials.Material_3}
-        />
-        <mesh
-          name="Object_7"
-          castShadow
-          receiveShadow
-          geometry={nodes.Object_7.geometry}
-          material={materials.Material_4}
-        />
-        <mesh
-          name="Object_8"
-          castShadow
-          receiveShadow
-          geometry={nodes.Object_8.geometry}
-          material={materials.Material_5}
-        />
-      </group>
+      <group name="Scene">
+        <group name="Sketchfab_model" 
+          rotation={[-Math.PI / 2, 0, 0]}>
+          <group name="root">
+            <group name="GLTF_SceneRootNode" rotation={[Math.PI / 2, 0, 0]}>
+              <group name="Samsung Evo 860_2"
+                position={[-27.329, 3.0075, 0.11734]}
+              >
+                        <mesh
+                          name="Object_4"
+                          castShadow
+                          receiveShadow
+                          geometry={nodes.Object_4.geometry}
+                          material={materials.Material_2}
+                        />
+                        <mesh
+                          name="Object_5"
+                          castShadow
+                          receiveShadow
+                          geometry={nodes.Object_5.geometry}
+                          material={materials.Material_1}
+                        />
+                        <mesh
+                          name="Object_6"
+                          castShadow
+                          receiveShadow
+                          geometry={nodes.Object_6.geometry}
+                          material={materials.Material_3}
+                        />
+                        <mesh
+                          name="Object_7"
+                          castShadow
+                          receiveShadow
+                          geometry={nodes.Object_7.geometry}
+                          material={materials.Material_4}
+                        />
+                        <mesh
+                          name="Object_8"
+                          castShadow
+                          receiveShadow
+                          geometry={nodes.Object_8.geometry}
+                          material={materials.Material_5}
+        
+                        />
+                    </group>
+            </group>
+       </group>
+   </group>
+</group>
 
       {showInfo && (
         <group rotation={[-Math.PI / 1, 1, Math.PI]} position={[0.5, 1, 2]}>
