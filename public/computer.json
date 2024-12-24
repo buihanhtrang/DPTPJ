@@ -4,7 +4,7 @@
     "name": "Alien Laptop",
     "description": "Alien laptop is a specialized personal computer designed for playing PC games at high standards.",
     "discount": 56,
-    "href": "/alien-laptop",
+    "hreff": "/computer",
     "specs": {
       "CPU": "Intel Core i9-12900H",
       "GPU": "NVIDIA GeForce RTX 3080 Ti",
@@ -28,7 +28,7 @@
     "name": "UltraBook Pro",
     "description": "A slim and powerful laptop designed for professionals who need portability and performance.",
     "discount": 48,
-    "href": "/ultrabook-pro",
+    "hreff": "/computer",
     "specs": {
       "CPU": "Intel Core i7-1260P",
       "GPU": "Integrated Intel Iris Xe",
@@ -52,7 +52,7 @@
     "name": "Gaming Beast",
     "description": "High-performance gaming laptop with cutting-edge hardware and RGB lighting.",
     "discount": 65,
-    "href": "/gaming-beast",
+    "hreff": "/computer",
     "specs": {
       "CPU": "AMD Ryzen 9 5900HX",
       "GPU": "NVIDIA GeForce RTX 3070",
@@ -76,7 +76,7 @@
     "name": "Workstation Elite",
     "description": "A powerful workstation for creators, engineers, and professionals who demand high performance.",
     "discount": 52,
-    "href": "/workstation-elite",
+    "hreff": "/computer",
     "specs": {
       "CPU": "Intel Xeon W-11955M",
       "GPU": "NVIDIA Quadro RTX A5000",

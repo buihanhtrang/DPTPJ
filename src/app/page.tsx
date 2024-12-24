@@ -13,6 +13,7 @@ import DeveloperInfo from '@/components/developer/component';
 import MoreCard from '@/components/more/component';
 import CompareTable from "@/components/compare_table/component";
 import CompareBar from "@/components/compare_bar/component";
+import ChatModal from "@/components/chat_modal/component";
 
 // models
 import { IProduct } from '@/models/product'
@@ -82,10 +83,10 @@ export default function Home() {
             Top Deals
           </motion.h1>
 
-          {/* more */}
+          {/* more
           <Fab color="primary" aria-label="More" size='small'>
             <MdKeyboardArrowRight />
-          </Fab>
+          </Fab> */}
 
         </motion.div>
         <motion.div className={styles.productGrid} variants={containerVariants}>
@@ -152,6 +153,12 @@ export default function Home() {
         </div>
       )}
 
+      {/* Chat Modal */}
+      {(
+        <div>
+          <ChatModal/>
+        </div>
+      )}
 
       <div style={{ height: "10vh" }} />
     </div>

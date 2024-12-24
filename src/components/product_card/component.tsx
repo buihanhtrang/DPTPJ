@@ -65,7 +65,7 @@ const ProductCard = ({ product: { image, name, description, discount, hreff, }, 
 
 
                 {
-                    isMobile &&
+                    // isMobile &&
                         <motion.div variants={slideUpVariants}>
                             <Button
                                 variant='contained'
@@ -74,6 +74,7 @@ const ProductCard = ({ product: { image, name, description, discount, hreff, }, 
                                 size='large'
                                 style={{
                                     textTransform: 'none',
+                                    left: '0px',
                                 }}
                             >
                                 Detail
@@ -84,6 +85,7 @@ const ProductCard = ({ product: { image, name, description, discount, hreff, }, 
                                 size='large'
                                 style={{
                                     textTransform: 'none',
+                                    right: '0px',
                                 }}
                                 onClick={(e) => {
                                     e.stopPropagation(); // Ngăn chặn hành vi click bubble lên phần tử cha
@@ -95,7 +97,7 @@ const ProductCard = ({ product: { image, name, description, discount, hreff, }, 
                         </motion.div>
                 }
 
-                {
+                {/* {
                     !isMobile &&
                         <div className={styles.cardContentCta}>
                             <Button
@@ -124,7 +126,7 @@ const ProductCard = ({ product: { image, name, description, discount, hreff, }, 
                                 Add to compare
                             </Button>
                         </div>
-                }
+                } */}
 
             </motion.div>
 
