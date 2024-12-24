@@ -1,0 +1,98 @@
+[
+  {
+    "image": "/assets/laptop-1.jpg",
+    "name": "Alien Laptop",
+    "description": "Alien laptop is a specialized personal computer designed for playing PC games at high standards.",
+    "discount": 56,
+    "href": "/alien-laptop",
+    "specs": {
+      "CPU": "Intel Core i9-12900H",
+      "GPU": "NVIDIA GeForce RTX 3080 Ti",
+      "RAM": "32GB DDR5",
+      "ROM": "2TB NVMe SSD",
+      "Display": "17.3-inch QHD (2560 x 1440), 240Hz",
+      "Brightness": "400 nits",
+      "Battery": "99.9Wh",
+      "Weight": "2.7 kg",
+      "Ports": "3x USB 3.2, 1x Thunderbolt 4, HDMI 2.1",
+      "Webcam": "1080p Full HD",
+      "Audio": "Dolby Atmos Speakers",
+      "Wireless": "Wi-Fi 6E, Bluetooth 5.3",
+      "Keyboard": "RGB Backlit Mechanical Keyboard",
+      "Operating System": "Windows 11 Pro",
+      "Warranty": "2 Years"
+    }
+  },
+  {
+    "image": "/assets/laptop-2.jpg",
+    "name": "UltraBook Pro",
+    "description": "A slim and powerful laptop designed for professionals who need portability and performance.",
+    "discount": 48,
+    "href": "/ultrabook-pro",
+    "specs": {
+      "CPU": "Intel Core i7-1260P",
+      "GPU": "Integrated Intel Iris Xe",
+      "RAM": "16GB LPDDR5",
+      "ROM": "1TB NVMe SSD",
+      "Display": "14-inch 4K OLED (3840 x 2160)",
+      "Brightness": "500 nits",
+      "Battery": "76Wh",
+      "Weight": "1.4 kg",
+      "Ports": "2x USB-C Thunderbolt 4, 1x USB-A, HDMI",
+      "Webcam": "720p HD",
+      "Audio": "Harman Kardon Speakers",
+      "Wireless": "Wi-Fi 6, Bluetooth 5.2",
+      "Keyboard": "Backlit Chiclet Keyboard",
+      "Operating System": "Windows 11 Home",
+      "Warranty": "1 Year"
+    }
+  },
+  {
+    "image": "/assets/laptop-3.jpg",
+    "name": "Gaming Beast",
+    "description": "High-performance gaming laptop with cutting-edge hardware and RGB lighting.",
+    "discount": 65,
+    "href": "/gaming-beast",
+    "specs": {
+      "CPU": "AMD Ryzen 9 5900HX",
+      "GPU": "NVIDIA GeForce RTX 3070",
+      "RAM": "32GB DDR4",
+      "ROM": "1TB NVMe SSD",
+      "Display": "15.6-inch FHD (1920 x 1080), 144Hz",
+      "Brightness": "300 nits",
+      "Battery": "90Wh",
+      "Weight": "2.3 kg",
+      "Ports": "3x USB-A, 1x USB-C, HDMI 2.1, Ethernet",
+      "Webcam": "720p HD",
+      "Audio": "DTS:X Ultra Surround",
+      "Wireless": "Wi-Fi 6E, Bluetooth 5.2",
+      "Keyboard": "Per-Key RGB Backlit Keyboard",
+      "Operating System": "Windows 10 Home",
+      "Warranty": "2 Years"
+    }
+  },
+  {
+    "image": "/assets/laptop-4.jpg",
+    "name": "Workstation Elite",
+    "description": "A powerful workstation for creators, engineers, and professionals who demand high performance.",
+    "discount": 52,
+    "href": "/workstation-elite",
+    "specs": {
+      "CPU": "Intel Xeon W-11955M",
+      "GPU": "NVIDIA Quadro RTX A5000",
+      "RAM": "64GB DDR4 ECC",
+      "ROM": "4TB NVMe SSD",
+      "Display": "16-inch 3K (3072 x 1920), Touchscreen",
+      "Brightness": "600 nits",
+      "Battery": "100Wh",
+      "Weight": "2.9 kg",
+      "Ports": "4x USB-C Thunderbolt 4, HDMI 2.0, SD Card Reader",
+      "Webcam": "1080p IR Camera",
+      "Audio": "Studio-Grade Speakers",
+      "Wireless": "Wi-Fi 6E, Bluetooth 5.3",
+      "Keyboard": "Premium Backlit Keyboard",
+      "Operating System": "Windows 11 Pro",
+      "Warranty": "3 Years"
+    }
+  }
+]
