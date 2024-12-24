@@ -136,6 +136,7 @@ export function Computer({ bodyColor, screenColor, keyboardColor, setShowSSD }: 
                   receiveShadow
                   geometry={nodes.Object_7.geometry}
                   material={materials.Material_4}
+                  {...screenColorProps}
                 />
                 <mesh
                   name="Object_8"
@@ -186,8 +187,6 @@ export function Computer({ bodyColor, screenColor, keyboardColor, setShowSSD }: 
                   receiveShadow
                   geometry={nodes.Object_14.geometry}
                   material={materials["Material.009"]}
-                  { ...bodyColorProps }
-
                 />
                 <mesh
                   name="Object_15"
@@ -195,8 +194,6 @@ export function Computer({ bodyColor, screenColor, keyboardColor, setShowSSD }: 
                   receiveShadow
                   geometry={nodes.Object_15.geometry}
                   material={materials["Material.009"]}
-                  { ...bodyColorProps }
-
                 />
                 <mesh
                   name="Object_16"
@@ -204,6 +201,7 @@ export function Computer({ bodyColor, screenColor, keyboardColor, setShowSSD }: 
                   receiveShadow
                   geometry={nodes.Object_16.geometry}
                   material={materials.Material_10}
+                  {...keyboardColorProps}
                 />
                 <mesh
                   name="Object_17"

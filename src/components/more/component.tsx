@@ -21,7 +21,7 @@ const MoreCard = () => {
             {/* image */}
             <motion.div variants={itemVariants} className={styles.imageContainer}>
                 <Image
-                    src={'/assets/cozy-1.jpg'}
+                    src={'/assets/computer-shop.jpeg'}
                     alt='Discount Image'
                     fill
                     className={styles.image}
@@ -79,7 +79,7 @@ const MoreCard = () => {
                     </motion.p>
 
                     <motion.p className={styles.cardContentSubTitle} variants={itemVariants}>
-                        Cozy Coming
+                        H2TL Coming
                     </motion.p>
 
                     <motion.p className={styles.cardContentDescription} variants={itemVariants}>
