@@ -1,6 +1,7 @@
 import * as THREE from "three";
-import React from "react";
+import React, {useState, useRef } from "react";
 import { useGLTF, Text } from "@react-three/drei";
+import { useSpring, animated, to } from "@react-spring/three";
 import { GLTF } from "three-stdlib";
 
 
@@ -55,6 +56,14 @@ export function Computer({ bodyColor, screenColor, keyboardColor, setShowSSD }: 
 
   const buttonRef = React.useRef<THREE.Mesh>(null);
 
+  const [isSplit, setIsSplit] = useState(false);
+
+  const { Cube001_1, Cube003_2 } = useSpring({
+    Cube001_1: isSplit ? [-1, 0.2, 0] : [-1, 0, 0],
+    Cube003_2: isSplit ? [0, -0.2, 0] : [0, 0, 0],
+    config: { mass: 1, tension: 170, friction: 26 },
+  });
+  
   let bodyColorProps: ColorProps = {}
   if(bodyColor != null) {
       bodyColorProps['material-color'] = bodyColor
@@ -78,10 +87,36 @@ export function Computer({ bodyColor, screenColor, keyboardColor, setShowSSD }: 
         rotation={[-Math.PI / 2, 0, 0]}>
           <group name="root">
             <group name="GLTF_SceneRootNode" rotation={[Math.PI / 2, 0, 0]}>
-              <group name="Cube001_1"
-              position={[-1, 0, 0]}
+              <animated.group name="Cube001_1"
+              position={Cube001_1.to((x, y, z) => [x, y, z])}
               rotation={[0, 0, (-(Math.PI)*79.082) /180]}
               >
+              <mesh
+                position={[-0.2, 0.2, -1]}
+                rotation={[-Math.PI / 2, 0, 0]}
+                onClick={() => setIsSplit((prev) => !prev)}         
+                onPointerOver={() => (document.body.style.cursor = "pointer")}
+                onPointerOut={() => (document.body.style.cursor = "default")}
+              >
+                <circleGeometry args={[0.1, 30]} /> 
+                <meshStandardMaterial color="black" transparent opacity={0.6} />
+
+                <mesh>
+                  <ringGeometry args={[0.1, 0.12, 64]} /> 
+                  <meshStandardMaterial color="white" transparent opacity={0.6} />
+                </mesh>
+
+                <Text
+                  rotation={[0, 0, Math.PI / 2]}
+                  position={[0, 0, 0.01]} 
+                  fontSize={0.1}
+                  color="white"
+                  anchorX="center"
+                  anchorY="middle"
+                >
+                  1
+                </Text>
+              </mesh>
               <mesh
                 ref={buttonRef} 
                 position={[-0.1, 0.5, 1.8]}
@@ -169,10 +204,11 @@ export function Computer({ bodyColor, screenColor, keyboardColor, setShowSSD }: 
                   material={materials.Material_13}
                   { ...bodyColorProps }
                 />
-              </group>
+              </animated.group>
 
-              <group
+              <animated.group
                 name="Cube003_2"
+                position={Cube003_2.to((x, y, z) => [x, y, z])}
               >
                 <mesh
                   name="Object_13"
@@ -224,7 +260,7 @@ export function Computer({ bodyColor, screenColor, keyboardColor, setShowSSD }: 
                   geometry={nodes.Object_19.geometry}
                   material={materials.Material_14}
                 />
-              </group>
+              </animated.group>
             </group>
           </group>
         </group>
