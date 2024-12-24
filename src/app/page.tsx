@@ -25,11 +25,11 @@ import styles from './page.module.css'
 
 const products: Array<IProduct> = [
   {
-    image: '/assets/cozy-1.jpg',
-    name: 'Round Chair',
-    description: 'Decadently soft microfiber lends big-time comfort and style. A warm, welcoming contemporary design is on full display.',
-    discount: 78,
-    href: '/round'
+    image: '/assets/laptop-1.jpg',
+    name: 'Computer',
+    description: 'Alien laptop is a specialized personal computer designed for playing PC games by using high-performance graphics cards, core-count CPU with higher RAM.',
+    discount: 56,
+    href: '/computer'
   },
   {
     image: '/assets/laptop-1.jpg',

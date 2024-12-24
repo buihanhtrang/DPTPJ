@@ -11,7 +11,7 @@ import { motion } from 'framer-motion'
 // components
 import ConfiguratorComponent from '@/components/configurator/component'
 import ColorPickerComponent from '@/components/color_picker/component'
-import DetailPickerComponent from '@/components/detail_picker/component'
+// import DetailPickerComponent from '@/components/detail_picker/component'
 
 // models
 import { IConfiguratorOption } from '../../models/configuration'
@@ -51,7 +51,7 @@ const ComputerPage = () => {
         ]
     )
 
-    const [details, setDetails] = useState<string>("Default Detail")
+    // const [details, setDetails] = useState<string>("Default Detail")
 
 
     const onSelectedColor = (title: string, color: string) => {
@@ -65,9 +65,9 @@ const ComputerPage = () => {
         })
     }
 
-    const onDetailChange = (newDetail: string) => {
-        setDetails(newDetail);
-    };
+    // const onDetailChange = (newDetail: string) => {
+    //     setDetails(newDetail);
+    // };
 
     const getbodyColor = ()=> {
         return configOptions.find(c=> c.title === bodyColor)!.selectedColor
@@ -150,9 +150,9 @@ const ComputerPage = () => {
                     })
                 }
 
-                <motion.div variants={itemVariants}>
-                    <DetailPickerComponent selectedDetail={details} onDetailChange={onDetailChange} />
-                </motion.div>
+                {/* <motion.div variants={itemVariants}> */}
+                    {/* <DetailPickerComponent selectedDetail={details} onDetailChange={onDetailChange} /> */}
+                {/* </motion.div> */}
             </ConfiguratorComponent>
         </div>
     )
