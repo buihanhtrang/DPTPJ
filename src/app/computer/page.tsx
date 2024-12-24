@@ -88,6 +88,8 @@ const ComputerPage = () => {
   const [selectedRoom, setSelectedRoom] = useState<keyof typeof HDRI_PATHS | "">(""); // "" as default
   const [showSSD, setShowSSD] = useState(false);
   const [isMenuVisible, setIsMenuVisible] = useState(true);
+  const [isInfoVisible, setIsInfoVisible] = useState(false);
+
 
   const [configOptions, setConfigOptions] = useState<Array<IConfiguratorOption>>([
     {
@@ -108,7 +110,7 @@ const ComputerPage = () => {
   ]);
 
   const props = useSpring({
-    position: showSSD ? [0, 0, 0] : [-3.5, 0, -3.5],
+    position: showSSD ? [0, 0, 0] : [-2, 0, -3],
     config: { mass: 1, tension: 100, friction: 40 },
   });
 
@@ -247,6 +249,7 @@ const ComputerPage = () => {
             keyboardColor={getkeyboardColor()}
             screenColor={getscreenColor()}
             setShowSSD={setShowSSD}
+            isInfoVisible={isInfoVisible}
           />
         </group>
         {showSSD && (
@@ -262,11 +265,8 @@ const ComputerPage = () => {
           </Text3D>
         </group>
       </Canvas>
-      <InfoButton
-                onToggle={(isOn) => {
-                    console.log(`Info button is now: ${isOn ? 'ON' : 'OFF'}`);
-                }}
-            />
+      <InfoButton onToggle={(isOn) => setIsInfoVisible(isOn)} />
+
 
       <ConfiguratorComponent title="Configure Your" subTitle="Laptop" isConfiguratorOpen={(v) => setIsConfiguratorOpen(v)}>
         {configOptions.map((config, i) => (

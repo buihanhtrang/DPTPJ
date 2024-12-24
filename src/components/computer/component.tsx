@@ -4,6 +4,7 @@ import { useGLTF, Text } from "@react-three/drei";
 import { useSpring, animated, to } from "@react-spring/three";
 import { GLTF } from "three-stdlib";
 
+import InfoMesh from "../showinfo/InfoMesh";
 
 type GLTFResult = GLTF & {
   nodes: {
@@ -47,16 +48,19 @@ type ComputerProps = {
   screenColor?: string
   keyboardColor?: string
   setShowSSD: React.Dispatch<React.SetStateAction<boolean>>
+  isInfoVisible: boolean
 }
 interface ColorProps {
     'material-color'?: string
 }
-export function Computer({ bodyColor, screenColor, keyboardColor, setShowSSD }: ComputerProps) {
+export function Computer({ bodyColor, screenColor, keyboardColor, setShowSSD, isInfoVisible= false }: ComputerProps) {
   const { nodes, materials } = useGLTF("/assets/gaming_laptop/scene-1.glb") as GLTFResult;
 
   const buttonRef = React.useRef<THREE.Mesh>(null);
 
   const [isFloating, setIsFloating] = useState(false);
+  const [visibleInfo, setVisibleInfo] = useState(null);
+  
 
   const { Object16Position } = useSpring({
     Object16Position: isFloating ? [0, 1, 0] : [0, 0, 0], 
@@ -69,6 +73,9 @@ export function Computer({ bodyColor, screenColor, keyboardColor, setShowSSD }: 
     Cube003_2: isSplit ? [0, -0.2, 0] : [0, 0, 0],
     config: { mass: 1, tension: 170, friction: 26 },
   });
+  const handleInfoToggle = (infoType) => {
+    setVisibleInfo((prev) => (prev === infoType ? null : infoType));
+  };
   
   let bodyColorProps: ColorProps = {}
   if(bodyColor != null) {
@@ -123,6 +130,82 @@ export function Computer({ bodyColor, screenColor, keyboardColor, setShowSSD }: 
                   1
                 </Text>
               </mesh>
+              {isInfoVisible && (
+                <>
+                  <InfoMesh 
+                    rotation={[Math.PI / 2, Math.PI, 0]} 
+                    position={[-0.45, 0.05, -1.4]} 
+                    onClick={() => handleInfoToggle("info1")} 
+                  />
+                  <InfoMesh 
+                    rotation={[Math.PI / 2, Math.PI, 0]} 
+                    position={[-2, 0.05, -1]} 
+                    onClick={() => handleInfoToggle("info2")} 
+                  />
+                </>
+              )}
+              <group>
+                {visibleInfo === "info1" && (
+                  <group rotation={[Math.PI / 2, Math.PI, -Math.PI/2]} position={[-1, 0.2, -2.8]}>
+                    <mesh>
+                      <planeGeometry args={[1.8, 1]} />
+                      <meshStandardMaterial color="white" transparent opacity={0.8} />
+                    </mesh>
+                    <Text
+                      fontSize={0.2}
+                      color="black"
+                      position={[0, 0.2, 0.01]} 
+                      anchorX="center"
+                      anchorY="middle"
+                    >
+                      Battery Information{"\n"}
+                    </Text>
+                    <Text
+                      fontSize={0.1}
+                      color="black"
+                      position={[0, -0.1, 0.01]} 
+                      anchorX="center"
+                      anchorY="middle"
+                      textAlign="center"
+                    >
+                      Voltage: 14.8VDC {"\n"}
+                      Operating: 0°C to 35°C{"\n"}
+                      300 discharge/charge cycles
+                    </Text>
+                  </group>
+                )}
+
+                {visibleInfo === "info2" && (
+                  <group rotation={[Math.PI / 2, Math.PI, -Math.PI/2]} position={[-2, 0.2, -2.8]}>
+                    <mesh>
+                      <planeGeometry args={[1.8, 1]} />
+                      <meshStandardMaterial color="white" transparent opacity={0.8} />
+                    </mesh>
+                    <Text
+                      fontSize={0.2}
+                      color="black"
+                      position={[0, 0.2, 0.01]} 
+                      anchorX="center"
+                      anchorY="middle"
+                    >
+                      Monitor{"\n"}
+                    </Text>
+                    <Text
+                      fontSize={0.1}
+                      color="black"
+                      position={[0, -0.1, 0.01]} 
+                      anchorX="center"
+                      anchorY="middle"
+                      textAlign="center"
+                    >
+                      15.6-inch FHD Ultraslim {"\n"}
+                      Anti-Glare non-touch screen {"\n"}
+                      Resolution: 1920 x 1080
+                    </Text>
+                  </group>
+                )}
+              </group>
+
                 <mesh
                   name="Object_4"
                   castShadow
