@@ -35,7 +35,7 @@ const ComputerPage = () => {
     const [showSSD, setShowSSD] = useState(false);
 
     const props = useSpring({
-        position: showSSD ? [-0.3, 0, -0.3] : [-3.5, 0, -3.5], 
+        position: showSSD ? [0, 0, 0] : [-3.5, 0, -3.5], 
         config: { mass: 1, tension: 100, friction: 40 }, 
     });
 

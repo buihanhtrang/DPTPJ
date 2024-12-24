@@ -12,11 +12,14 @@ type GLTFResult = GLTF & {
     Object_8: THREE.Mesh;
   };
   materials: {
-    Material_1: THREE.MeshStandardMaterial;
-    Material_2: THREE.MeshStandardMaterial;
-    Material_3: THREE.MeshStandardMaterial;
-    Material_4: THREE.MeshStandardMaterial;
-    Material_5: THREE.MeshStandardMaterial;
+    ["Material.001"]: THREE.MeshStandardMaterial;
+    ["Material"]: THREE.MeshStandardMaterial;
+    ["Material.003"]: THREE.MeshStandardMaterial;
+    ["Material.004"]: THREE.MeshStandardMaterial;
+    ["Material.006"]: THREE.MeshStandardMaterial;
+    ["Material.007"]: THREE.MeshStandardMaterial;
+    ["Material.008"]: THREE.MeshStandardMaterial;
+    ["Material.009"]: THREE.MeshStandardMaterial;
   };
 };
 
@@ -32,56 +35,47 @@ export function StorageSSD() {
         setShowInfo((prev) => !prev); 
       }}
     >
-      {/* Storage Model */}
-      <group name="Scene">
-        <group name="Sketchfab_model" 
-          rotation={[-Math.PI / 2, 0, 0]}>
-          <group name="root">
-            <group name="GLTF_SceneRootNode" rotation={[Math.PI / 2, 0, 0]}>
-              <group name="Samsung Evo 860_2"
-                position={[-27.329, 3.0075, 0.11734]}
-              >
-                        <mesh
-                          name="Object_4"
-                          castShadow
-                          receiveShadow
-                          geometry={nodes.Object_4.geometry}
-                          material={materials.Material_2}
-                        />
-                        <mesh
-                          name="Object_5"
-                          castShadow
-                          receiveShadow
-                          geometry={nodes.Object_5.geometry}
-                          material={materials.Material_1}
-                        />
-                        <mesh
-                          name="Object_6"
-                          castShadow
-                          receiveShadow
-                          geometry={nodes.Object_6.geometry}
-                          material={materials.Material_3}
-                        />
-                        <mesh
-                          name="Object_7"
-                          castShadow
-                          receiveShadow
-                          geometry={nodes.Object_7.geometry}
-                          material={materials.Material_4}
-                        />
-                        <mesh
-                          name="Object_8"
-                          castShadow
-                          receiveShadow
-                          geometry={nodes.Object_8.geometry}
-                          material={materials.Material_5}
-        
-                        />
-                    </group>
-            </group>
-       </group>
-   </group>
-</group>
+      <group
+        name="Scene" rotation={[0, Math.PI*8.3/12, 0]} scale={0.3} position={[0.3, -1.1, 2]}
+        onPointerOver={() => (document.body.style.cursor = "pointer")}
+        onPointerOut={() => (document.body.style.cursor = "default")}
+      >
+        <mesh
+          name="Object_4"
+          castShadow
+          receiveShadow
+          geometry={nodes.Object_4.geometry}
+          material={materials["Material.001"]}
+          />
+        <mesh
+          name="Object_5"
+          castShadow
+          receiveShadow
+          geometry={nodes.Object_5.geometry}
+          material={materials["Material.001"]}
+        />
+        <mesh
+          name="Object_6"
+          castShadow
+          receiveShadow
+          geometry={nodes.Object_6.geometry}
+          material={materials["Material"]}
+        />
+        <mesh
+          name="Object_7"
+          castShadow
+          receiveShadow
+          geometry={nodes.Object_7.geometry}
+          material={materials["Material"]}
+        />
+        <mesh
+          name="Object_8"
+          castShadow
+          receiveShadow
+          geometry={nodes.Object_8.geometry}
+          material={materials["Material"]}
+        />
+      </group>
 
       {showInfo && (
         <group rotation={[-Math.PI / 1, 1, Math.PI]} position={[0.5, 1, 2]}>
@@ -113,5 +107,6 @@ export function StorageSSD() {
     </group>
   );
 }
+
 
 useGLTF.preload("/assets/storage/storage.glb");
