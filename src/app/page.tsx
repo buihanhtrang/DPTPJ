@@ -24,24 +24,6 @@ import styles from './page.module.css'
 
 import computers from "../../public/computer.json"; // JSON file for product details
 
-
-
-const products: Array<IProduct> = [
-  {
-    image: '/assets/laptop-1.jpg',
-    name: 'Computer',
-    description: 'Alien laptop is a specialized personal computer designed for playing PC games by using high-performance graphics cards, core-count CPU with higher RAM.',
-    discount: 56,
-    hreff: '/computer'
-  },
-  { 
-    image: '/assets/laptop-1.jpg',
-    name: 'Computer',
-    description: 'Alien laptop is a specialized personal computer designed for playing PC games by using high-performance graphics cards, core-count CPU with higher RAM.',
-    discount: 56,
-    hreff: '/computer'
-  },
-]
 export default function Home() {
   const shopRef = useRef<null | HTMLDivElement>(null)
   const [compareList, setCompareList] = useState<IProduct[]>([]);
