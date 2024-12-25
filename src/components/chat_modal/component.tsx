@@ -5,7 +5,7 @@ import styles from './component.module.css';
 const ChatModal = () => {
   const [isOpen, setIsOpen] = useState(false); // Modal toggle state
   const [input, setInput] = useState(''); // Current input message
-  const [messages, setMessages] = useState([]); // Chat history
+  const [messages, setMessages] = useState([{ sender: 'AI', content: "Hello there! How can I help you today?" }]); // Chat history
 
   // Toggle modal visibility
   const toggleModal = () => {
