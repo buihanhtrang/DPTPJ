@@ -13,7 +13,7 @@ import {
   useHelper,
 } from "@react-three/drei";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { useSpring, a } from "@react-spring/three";
 import * as THREE from "three";
 import { RGBELoader } from "three/examples/jsm/loaders/RGBELoader";
@@ -24,7 +24,6 @@ import { motion } from "framer-motion";
 import ConfiguratorComponent from "@/components/configurator/component";
 import ColorPickerComponent from "@/components/color_picker/component";
 import InfoButton from "@/components/showinfo/InfoButton";
-// import DetailPickerComponent from "@/components/detail_picker/component"
 
 // models
 import { IConfiguratorOption } from "../../models/configuration";
@@ -44,14 +43,21 @@ const HDRI_PATHS = {
   indoor: "/assets/home.hdr",
 };
 
+const AUDIO_PATHS = {
+  coffee_shop: "/assets/coffeeshop.mp3",
+  outdoor: "/assets/outdoor.mp3",
+  indoor: "/assets/home.mp3",
+  intro: "/assets/intro.mp3", // Music before selecting a room
+};
+
 const HDRILoader = ({ path }: { path: string }) => {
   const { scene, gl } = useThree();
 
-  React.useEffect(() => {
+  useEffect(() => {
     const loader = new RGBELoader();
     const pmremGenerator = new THREE.PMREMGenerator(gl);
 
-    const defaultColor = new THREE.Color(0xD3D3D3); // Black as default
+    const defaultColor = new THREE.Color(0xD3D3D3); // Default background
     scene.background = defaultColor;
     scene.environment = null;
 
@@ -89,7 +95,8 @@ const ComputerPage = () => {
   const [showSSD, setShowSSD] = useState(false);
   const [isMenuVisible, setIsMenuVisible] = useState(true);
   const [isInfoVisible, setIsInfoVisible] = useState(false);
-
+  const [audio, setAudio] = useState<HTMLAudioElement | null>(null);
+  const [isAudioPlaying, setIsAudioPlaying] = useState(false);
 
   const [configOptions, setConfigOptions] = useState<Array<IConfiguratorOption>>([
     {
@@ -129,10 +136,57 @@ const ComputerPage = () => {
   const getkeyboardColor = () => configOptions.find((c) => c.title === keyboardColor)!.selectedColor;
   const getscreenColor = () => configOptions.find((c) => c.title === screenColor)!.selectedColor;
 
-  // Reset function to clear selected room and reset background
+  const toggleAudio = (room: keyof typeof AUDIO_PATHS) => {
+    if (audio) {
+      audio.pause();
+      setAudio(null);
+    }
+
+    if (room && AUDIO_PATHS[room]) {
+      const newAudio = new Audio(AUDIO_PATHS[room]);
+      setAudio(newAudio);
+      newAudio.loop = true;
+      newAudio.play();
+      setIsAudioPlaying(true);
+    } else {
+      setIsAudioPlaying(false);
+    }
+  };
+
+  const handleAudioToggle = () => {
+    if (audio) {
+      if (isAudioPlaying) {
+        audio.pause();
+        setIsAudioPlaying(false);
+      } else {
+        audio.play();
+        setIsAudioPlaying(true);
+      }
+    }
+  };
+
   const resetBackground = () => {
     setSelectedRoom(""); // Clears the selected room
+    if (audio) {
+      audio.pause();
+      setAudio(null);
+    }
+    setIsAudioPlaying(false);
   };
+
+  useEffect(() => {
+    const defaultAudio = new Audio(AUDIO_PATHS.intro);
+    setAudio(defaultAudio);
+    defaultAudio.loop = true;
+    defaultAudio.play();
+    setIsAudioPlaying(true);
+
+    return () => {
+      if (defaultAudio) {
+        defaultAudio.pause();
+      }
+    };
+  }, []);
 
   return (
     <div className="page">
@@ -172,7 +226,10 @@ const ComputerPage = () => {
         {isMenuVisible && (
           <>
             <button
-              onClick={() => setSelectedRoom("coffee_shop")}
+              onClick={() => {
+                setSelectedRoom("coffee_shop");
+                toggleAudio("coffee_shop");
+              }}
               style={{
                 backgroundColor: "#1e1e1e",
                 color: "#fff",
@@ -185,7 +242,10 @@ const ComputerPage = () => {
               Coffee Shop
             </button>
             <button
-              onClick={() => setSelectedRoom("outdoor")}
+              onClick={() => {
+                setSelectedRoom("outdoor");
+                toggleAudio("outdoor");
+              }}
               style={{
                 backgroundColor: "#1e1e1e",
                 color: "#fff",
@@ -198,7 +258,10 @@ const ComputerPage = () => {
               Outdoor
             </button>
             <button
-              onClick={() => setSelectedRoom("indoor")}
+              onClick={() => {
+                setSelectedRoom("indoor");
+                toggleAudio("indoor");
+              }}
               style={{
                 backgroundColor: "#1e1e1e",
                 color: "#fff",
@@ -223,6 +286,21 @@ const ComputerPage = () => {
               }}
             >
               Reset Background
+            </button>
+
+            {/* Audio Control Button */}
+            <button
+              onClick={handleAudioToggle}
+              style={{
+                backgroundColor: isAudioPlaying ? "#BA3B2E" : "#4CC9FE",
+                color: "#fff",
+                padding: "10px",
+                borderRadius: "5px",
+                border: "none",
+                cursor: "pointer",
+              }}
+            >
+              {isAudioPlaying ? "Pause Music" : "Play Music"}
             </button>
           </>
         )}
@@ -266,7 +344,6 @@ const ComputerPage = () => {
         </group>
       </Canvas>
       <InfoButton onToggle={(isOn) => setIsInfoVisible(isOn)} />
-
 
       <ConfiguratorComponent title="Configure Your" subTitle="Laptop" isConfiguratorOpen={(v) => setIsConfiguratorOpen(v)}>
         {configOptions.map((config, i) => (
