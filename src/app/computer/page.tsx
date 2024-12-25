@@ -141,7 +141,7 @@ const ComputerPage = () => {
   const getbodyColor = () => configOptions.find((c) => c.title === bodyColor)!.selectedColor;
   const getkeyboardColor = () => configOptions.find((c) => c.title === keyboardColor)!.selectedColor;
   const getscreenColor = () => configOptions.find((c) => c.title === screenColor)!.selectedColor;
-
+  
   const [isRotating, setIsRotating] = useState(false); // Rotation state
   const computerGroupRef = useRef(null); // Ref for the computer group
 
@@ -191,11 +191,8 @@ const ComputerPage = () => {
       setAudio(null);
     }
     setIsAudioPlaying(false);
-    playIntroMusic(); // Play intro music when resetting
-  };
-
-  // Function to play intro music
-  const playIntroMusic = () => {
+    
+    // Play intro music after resetting the background
     const introAudio = new Audio(AUDIO_PATHS.intro);
     setAudio(introAudio);
     introAudio.loop = true;
@@ -204,12 +201,15 @@ const ComputerPage = () => {
   };
 
   useEffect(() => {
-    // Play intro music when the page loads
-    playIntroMusic();
+    const defaultAudio = new Audio(AUDIO_PATHS.intro);
+    setAudio(defaultAudio);
+    defaultAudio.loop = true;
+    defaultAudio.play();
+    setIsAudioPlaying(true);
 
     return () => {
-      if (audio) {
-        audio.pause();
+      if (defaultAudio) {
+        defaultAudio.pause();
       }
     };
   }, []);
@@ -422,4 +422,3 @@ const ComputerPage = () => {
 };
 
 export default ComputerPage;
-
