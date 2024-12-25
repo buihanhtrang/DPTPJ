@@ -1,5 +1,5 @@
 import * as THREE from "three";
-import React, {useState, useRef } from "react";
+import React, {useState, useRef, useEffect } from "react";
 import { useGLTF, Text } from "@react-three/drei";
 import { useSpring, animated, to } from "@react-spring/three";
 import { GLTF } from "three-stdlib";
@@ -49,17 +49,22 @@ type ComputerProps = {
   keyboardColor?: string
   setShowSSD: React.Dispatch<React.SetStateAction<boolean>>
   isInfoVisible: boolean
+  videoUrls?: string[];
 }
 interface ColorProps {
     'material-color'?: string
 }
-export function Computer({ bodyColor, screenColor, keyboardColor, setShowSSD, isInfoVisible= false }: ComputerProps) {
+export function Computer({ bodyColor, screenColor, keyboardColor, setShowSSD, isInfoVisible= false, videoUrls = ["/assets/videos/video1.mp4", "/assets/videos/video.mp4"], }: ComputerProps) {
   const { nodes, materials } = useGLTF("/assets/gaming_laptop/scene-1.glb") as GLTFResult;
 
   const buttonRef = React.useRef<THREE.Mesh>(null);
+  const videoRef = useRef<HTMLVideoElement | null>(null);
+  const videoTexture = useRef<THREE.VideoTexture | null>(null);
 
   const [isFloating, setIsFloating] = useState(false);
   const [visibleInfo, setVisibleInfo] = useState(null);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
   
 
   const { Object16Position } = useSpring({
@@ -75,6 +80,46 @@ export function Computer({ bodyColor, screenColor, keyboardColor, setShowSSD, is
   });
   const handleInfoToggle = (infoType) => {
     setVisibleInfo((prev) => (prev === infoType ? null : infoType));
+  };
+  const toggleVideo = () => {
+    if (videoRef.current) {
+      if (isPlaying) {
+        videoRef.current.pause(); 
+        videoRef.current.currentTime = 0; 
+        setIsPlaying(false);
+      } else {
+        videoRef.current.play(); 
+        setIsPlaying(true);
+      }
+    }
+  };
+  
+  useEffect(() => {
+    if (!videoRef.current) {
+      const video = document.createElement("video");
+      video.src = videoUrls[currentVideoIndex];
+      video.loop = true;
+      video.muted = true;
+      video.play();
+      videoRef.current = video;
+
+      const texture = new THREE.VideoTexture(video);
+      texture.encoding = THREE.sRGBEncoding;
+      videoTexture.current = texture;
+    } else if (videoRef.current) {
+      videoRef.current.src = videoUrls[currentVideoIndex];
+      videoRef.current.play();
+    }
+  }, [currentVideoIndex, videoUrls]);
+
+  const handleNextVideo = () => {
+    setCurrentVideoIndex((prevIndex) => (prevIndex + 1) % videoUrls.length);
+  };
+
+  const handlePreviousVideo = () => {
+    setCurrentVideoIndex(
+      (prevIndex) => (prevIndex - 1 + videoUrls.length) % videoUrls.length
+    );
   };
   
   let bodyColorProps: ColorProps = {}
@@ -135,12 +180,16 @@ export function Computer({ bodyColor, screenColor, keyboardColor, setShowSSD, is
                   <InfoMesh 
                     rotation={[Math.PI / 2, Math.PI, 0]} 
                     position={[-0.45, 0.05, -1.4]} 
-                    onClick={() => handleInfoToggle("info1")} 
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleInfoToggle("info1");} } 
                   />
                   <InfoMesh 
                     rotation={[Math.PI / 2, Math.PI, 0]} 
                     position={[-2, 0.05, -1]} 
-                    onClick={() => handleInfoToggle("info2")} 
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleInfoToggle("info2");} }
                   />
                 </>
               )}
@@ -227,14 +276,73 @@ export function Computer({ bodyColor, screenColor, keyboardColor, setShowSSD, is
                   geometry={nodes.Object_6.geometry}
                   material={materials.Material_3}
                 />
-                <mesh
-                  name="Object_7"
-                  castShadow
-                  receiveShadow
-                  geometry={nodes.Object_7.geometry}
-                  material={materials.Material_4}
-                  {...screenColorProps}
+              <mesh
+                name="Object_7" 
+                castShadow
+                receiveShadow
+                geometry={nodes.Object_7.geometry}
+                material={materials.Material_4}
+                onClick={(e) => {
+                  e.stopPropagation(); 
+                  toggleVideo();
+                }} 
+                onPointerOver={() => (document.body.style.cursor = "pointer")}
+                onPointerOut={() => (document.body.style.cursor = "default")}
+              >
+                
+                  <meshStandardMaterial
+                  map={isPlaying && videoTexture.current ? videoTexture.current : null}
+                  attach="material"
+                  {...(!isPlaying && materials.Material_4)}
                 />
+                
+                <group rotation={[Math.PI / 2, Math.PI, -Math.PI/2]} position={[0, 0.03, 0]}>
+                  <mesh
+                    position={[-1.8, 1.3, 0]} 
+                    onClick={(e) => {
+                      e.stopPropagation(); 
+                      handlePreviousVideo();
+                    }}
+                    onPointerOver={() => (document.body.style.cursor = "pointer")}
+                    onPointerOut={() => (document.body.style.cursor = "default")}
+                  >
+                    <planeGeometry args={[0.3, 0.3]} />
+                    <meshStandardMaterial color="red" transparent opacity={0.5} />
+                    <Text
+                      fontSize={0.12}
+                      position={[0, 0, 0.02]}
+                      color="white"
+                      anchorX="center"
+                      anchorY="middle"
+                    >
+                      Prev
+                    </Text>
+                  </mesh>
+
+                  <mesh
+                    position={[1.8, 1.3, 0]} // Nút Next
+                    onClick={(e) => {
+                      e.stopPropagation(); // Ngăn chặn sự kiện lan sang các phần tử khác
+                      handleNextVideo();
+                    }}
+                    onPointerOver={() => (document.body.style.cursor = "pointer")}
+                    onPointerOut={() => (document.body.style.cursor = "default")}
+                  >
+                    <planeGeometry args={[0.3, 0.3]} />
+                    <meshStandardMaterial color="green" transparent opacity={0.5} />
+                    <Text
+                      fontSize={0.12}
+                      position={[0, 0, 0.02]}
+                      color="white"
+                      anchorX="center"
+                      anchorY="middle"
+                    >
+                      Next
+                    </Text>
+                  </mesh>
+                </group>
+              </mesh>
+
                 <mesh
                   name="Object_8"
                   castShadow
@@ -451,6 +559,7 @@ export function Computer({ bodyColor, screenColor, keyboardColor, setShowSSD, is
         </group>
       </group>
     </group>
+    
 
   );
 }

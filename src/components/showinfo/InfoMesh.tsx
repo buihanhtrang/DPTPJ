@@ -4,7 +4,7 @@ import { useFrame } from "@react-three/fiber";
 interface InfoMeshProps {
   position: [number, number, number];
   rotation?: [number, number, number]; 
-  onClick: () => void;
+  onClick?: (event: THREE.Event) => void;
 }
 
 const InfoMesh = ({ position, rotation = [-Math.PI / 2, 0, 0], onClick }: InfoMeshProps) => {
