@@ -422,3 +422,4 @@ const ComputerPage = () => {
 };
 
 export default ComputerPage;
+
