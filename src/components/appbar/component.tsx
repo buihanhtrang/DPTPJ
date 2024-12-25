@@ -62,7 +62,7 @@ const Appbar = () => {
             </motion.div>
 
 
-            
+{/*             
             <motion.div variants={itemVariants} className={styles.search}>
                 <Paper
                     component="form"
@@ -77,7 +77,7 @@ const Appbar = () => {
                         inputProps={{ 'aria-label': 'search your future product' }}
                     />
                 </Paper>
-            </motion.div>
+            </motion.div> */}
 
 
             <motion.div variants={itemVariants}>
