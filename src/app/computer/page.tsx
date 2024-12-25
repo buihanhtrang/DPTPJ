@@ -1,4 +1,4 @@
-"use client";
+"use client";  
 import {
   AccumulativeShadows,
   Environment,
@@ -48,6 +48,12 @@ const AUDIO_PATHS = {
   outdoor: "/assets/outdoor.mp3",
   indoor: "/assets/home.mp3",
   intro: "/assets/intro.mp3", // Music before selecting a room
+  click: "/assets/click.wav", // Click sound effect
+};
+
+const playClickSound = () => {
+  const audio = new Audio(AUDIO_PATHS.click);
+  audio.play();
 };
 
 const HDRILoader = ({ path }: { path: string }) => {
@@ -136,6 +142,19 @@ const ComputerPage = () => {
   const getkeyboardColor = () => configOptions.find((c) => c.title === keyboardColor)!.selectedColor;
   const getscreenColor = () => configOptions.find((c) => c.title === screenColor)!.selectedColor;
 
+  const [isRotating, setIsRotating] = useState(false); // Rotation state
+  const computerGroupRef = useRef(null); // Ref for the computer group
+
+  // Rotation logic inside the Canvas
+  const ComputerRotationHandler = () => {
+    useFrame(() => {
+      if (isRotating && computerGroupRef.current) {
+        computerGroupRef.current.rotation.y += 0.01; // Rotate around the Y-axis
+      }
+    });
+    return null; // No visual component needed
+  };
+
   const toggleAudio = (room: keyof typeof AUDIO_PATHS) => {
     if (audio) {
       audio.pause();
@@ -172,18 +191,25 @@ const ComputerPage = () => {
       setAudio(null);
     }
     setIsAudioPlaying(false);
+    playIntroMusic(); // Play intro music when resetting
+  };
+
+  // Function to play intro music
+  const playIntroMusic = () => {
+    const introAudio = new Audio(AUDIO_PATHS.intro);
+    setAudio(introAudio);
+    introAudio.loop = true;
+    introAudio.play();
+    setIsAudioPlaying(true);
   };
 
   useEffect(() => {
-    const defaultAudio = new Audio(AUDIO_PATHS.intro);
-    setAudio(defaultAudio);
-    defaultAudio.loop = true;
-    defaultAudio.play();
-    setIsAudioPlaying(true);
+    // Play intro music when the page loads
+    playIntroMusic();
 
     return () => {
-      if (defaultAudio) {
-        defaultAudio.pause();
+      if (audio) {
+        audio.pause();
       }
     };
   }, []);
@@ -206,9 +232,27 @@ const ComputerPage = () => {
           borderRadius: "10px",
         }}
       >
+        {/* Rotation Control Button */}
+        <button
+              onClick={() => setIsRotating((prev) => !prev)}
+              style={{
+                backgroundColor: isRotating ? "#BA3B2E" : "#4CC9FE",
+                color: "#fff",
+                padding: "10px 20px",
+                borderRadius: "5px",
+                border: "none",
+                cursor: "pointer",
+                fontWeight: "bold",
+                }}
+              >
+                {isRotating ? "Stop Rotation" : "Start Rotation"} 
+            </button>
         {/* Menu Toggle Button */}
         <button
-          onClick={() => setIsMenuVisible((prev) => !prev)}
+          onClick={() => {
+            setIsMenuVisible((prev) => !prev);
+            playClickSound();
+          }}
           style={{
             backgroundColor: "#4CC9FE",
             color: "#fff",
@@ -229,6 +273,7 @@ const ComputerPage = () => {
               onClick={() => {
                 setSelectedRoom("coffee_shop");
                 toggleAudio("coffee_shop");
+                playClickSound();
               }}
               style={{
                 backgroundColor: "#1e1e1e",
@@ -245,6 +290,7 @@ const ComputerPage = () => {
               onClick={() => {
                 setSelectedRoom("outdoor");
                 toggleAudio("outdoor");
+                playClickSound();
               }}
               style={{
                 backgroundColor: "#1e1e1e",
@@ -261,6 +307,7 @@ const ComputerPage = () => {
               onClick={() => {
                 setSelectedRoom("indoor");
                 toggleAudio("indoor");
+                playClickSound();
               }}
               style={{
                 backgroundColor: "#1e1e1e",
@@ -275,7 +322,10 @@ const ComputerPage = () => {
             </button>
             {/* Reset Button */}
             <button
-              onClick={resetBackground}
+              onClick={() => {
+                resetBackground();
+                playClickSound();
+              }}
               style={{
                 backgroundColor: "#BA3B2E",
                 color: "#fff",
@@ -290,7 +340,10 @@ const ComputerPage = () => {
 
             {/* Audio Control Button */}
             <button
-              onClick={handleAudioToggle}
+              onClick={() => {
+                handleAudioToggle();
+                playClickSound();
+              }}
               style={{
                 backgroundColor: isAudioPlaying ? "#BA3B2E" : "#4CC9FE",
                 color: "#fff",
@@ -302,14 +355,13 @@ const ComputerPage = () => {
             >
               {isAudioPlaying ? "Pause Music" : "Play Music"}
             </button>
+        
           </>
         )}
       </div>
 
       <Canvas shadows camera={{ position: [5, 0, 15], fov: 30 }} style={{ width: "100vw", height: "100vh" }}>
         <HDRILoader path={selectedRoom ? HDRI_PATHS[selectedRoom] : ""} />
-
-        <ambientLight color="gray" />
 
         <AccumulativeShadows position={[0, -2, 0]} frames={100} alphaTest={0.9} scale={50}>
           <RandomizedLight amount={8} radius={10} ambient={0.5} position={[1, 5, -1]} />
@@ -318,6 +370,7 @@ const ComputerPage = () => {
         <OrbitControls />
 
         <group
+          ref={computerGroupRef}
           position={isMobile ? [0.3, isConfiguratorOpen ? -0.5 : -1.8, -2] : [-1.5, -1.1, -2]}
           scale={isMobile ? 1.3 : 2.5}
           rotation-y={Math.PI / 5}
@@ -326,10 +379,14 @@ const ComputerPage = () => {
             bodyColor={getbodyColor()}
             keyboardColor={getkeyboardColor()}
             screenColor={getscreenColor()}
-            setShowSSD={setShowSSD}
+            setShowSSD={(value) => {
+              setShowSSD(value);
+              playClickSound();
+            }}
             isInfoVisible={isInfoVisible}
           />
         </group>
+        <ComputerRotationHandler />
         {showSSD && (
           <a.group position={props.position.to((x, y, z) => [x, y, z])}>
             <StorageSSD />
@@ -343,9 +400,17 @@ const ComputerPage = () => {
           </Text3D>
         </group>
       </Canvas>
-      <InfoButton onToggle={(isOn) => setIsInfoVisible(isOn)} />
+      <InfoButton
+        onToggle={(isOn) => {
+          setIsInfoVisible(isOn);
+          playClickSound();
+        }}
+      />
 
-      <ConfiguratorComponent title="Configure Your" subTitle="Laptop" isConfiguratorOpen={(v) => setIsConfiguratorOpen(v)}>
+      <ConfiguratorComponent title="Configure Your" subTitle="Laptop" isConfiguratorOpen={(v) => {
+        setIsConfiguratorOpen(v);
+        playClickSound();
+      }}>
         {configOptions.map((config, i) => (
           <motion.div variants={itemVariants} key={i}>
             <ColorPickerComponent key={i} options={config} onSelectedColor={onSelectedColor} />
