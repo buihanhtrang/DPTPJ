@@ -347,7 +347,7 @@ const ComputerPage = () => {
                 playClickSound();
               }}
               style={{
-                backgroundColor: isAudioPlaying ? "#BA3B2E" : "#4CC9FE",
+                backgroundColor: isAudioPlaying ? "#BA3B2E" : "#00ab41",
                 color: "#fff",
                 padding: "10px",
                 borderRadius: "5px",
