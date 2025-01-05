@@ -3,6 +3,8 @@ import React, {useState, useRef, useEffect } from "react";
 import { useGLTF, Text } from "@react-three/drei";
 import { useSpring, animated, to } from "@react-spring/three";
 import { GLTF } from "three-stdlib";
+import * as handpose from "@tensorflow-models/handpose";
+import "@tensorflow/tfjs-backend-webgl"; 
 
 import InfoMesh from "../showinfo/InfoMesh";
 
@@ -49,12 +51,13 @@ type ComputerProps = {
   keyboardColor?: string
   setShowSSD: React.Dispatch<React.SetStateAction<boolean>>
   isInfoVisible: boolean
+  isCameraActive: boolean
   videoUrls?: string[];
 }
 interface ColorProps {
     'material-color'?: string
 }
-export function Computer({ bodyColor, screenColor, keyboardColor, setShowSSD, isInfoVisible= false, videoUrls = ["/assets/videos/video1.mp4", "/assets/videos/video.mp4"], }: ComputerProps) {
+export function Computer({ bodyColor, screenColor, keyboardColor, setShowSSD, isInfoVisible= false, isCameraActive=false, videoUrls = ["/assets/videos/video1.mp4", "/assets/videos/video.mp4"], }: ComputerProps) {
   const { nodes, materials } = useGLTF("/assets/gaming_laptop/scene-1.glb") as GLTFResult;
 
   const buttonRef = React.useRef<THREE.Mesh>(null);
@@ -93,6 +96,71 @@ export function Computer({ bodyColor, screenColor, keyboardColor, setShowSSD, is
       }
     }
   };
+  useEffect(() => {
+    let localVideo: HTMLVideoElement | null = null;
+    let animationFrameId: number;
+  
+    if (!isCameraActive) return;
+  
+    const runHandpose = async () => {
+      const model = await handpose.load();
+  
+      // Tạo video element
+      const video = document.createElement("video");
+      video.style.display = "none";
+      document.body.appendChild(video);
+      localVideo = video;
+  
+      // Bật camera
+      const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+      video.srcObject = stream;
+      video.play();
+  
+      // Nhận diện bàn tay
+      const detectHands = async () => {
+        if (!isCameraActive) return; // Dừng nếu camera tắt
+  
+        const predictions = await model.estimateHands(video);
+        if (predictions.length > 0) {
+          const fingers = predictions[0].landmarks;
+          const fingerCount = countFingers(fingers);
+  
+          if (fingerCount === 1) setIsSplit((prev) => !prev);
+          if (fingerCount === 2) setShowSSD((prev) => !prev);
+          if (fingerCount === 3) setIsFloating((prev) => !prev);
+        }
+        setTimeout(detectHands, 1000);
+      };
+  
+      video.addEventListener("loadeddata", detectHands);
+    };
+  
+    runHandpose();
+  
+    // Cleanup
+    return () => {
+      if (localVideo) {
+        const stream = localVideo.srcObject as MediaStream;
+        stream?.getTracks().forEach((track) => track.stop());
+        localVideo.pause();
+        localVideo.srcObject = null;
+        localVideo.remove();
+      }
+      cancelAnimationFrame(animationFrameId);
+    };
+  }, [isCameraActive, setShowSSD]);
+  
+
+  const countFingers = (landmarks) => {
+    let count = 0;
+    const thresholds = [10, 12, 14, 16, 20]; // Chỉ số ngón tay
+    thresholds.forEach((index) => {
+      const tip = landmarks[index];
+      const dip = landmarks[index - 2];
+      if (tip[1] < dip[1]) count += 1; // So sánh trục y
+    });
+    return count;
+  };
   
   useEffect(() => {
     if (!videoRef.current) {
@@ -121,7 +189,6 @@ export function Computer({ bodyColor, screenColor, keyboardColor, setShowSSD, is
       (prevIndex) => (prevIndex - 1 + videoUrls.length) % videoUrls.length
     );
   };
-  
   let bodyColorProps: ColorProps = {}
   if(bodyColor != null) {
       bodyColorProps['material-color'] = bodyColor

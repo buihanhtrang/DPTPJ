@@ -32,6 +32,7 @@ import { IConfiguratorOption } from "../../models/configuration";
 import { itemVariants } from "@/styles/variants";
 import { Computer } from "@/components/computer/component";
 import { StorageSSD } from "@/components/computer/StorageSSD";
+import CameraButton from "@/components/computer/CameraButton";
 
 const keyboardColor = "Keyboard Color";
 const screenColor = "Screen Color";
@@ -105,6 +106,7 @@ const ComputerPage = () => {
   const [isAudioPlaying, setIsAudioPlaying] = useState(false);
   const [isHelpModalVisible, setIsHelpModalVisible] = useState(false);
   const [currentStep, setCurrentStep] = useState(1);
+  const [isCameraActive, setIsCameraActive] = useState(false);
 
   const handleNext = () => {
     setCurrentStep((prev) => (prev < 2 ? prev + 1 : 1));
@@ -504,6 +506,7 @@ const ComputerPage = () => {
               playClickSound();
             }}
             isInfoVisible={isInfoVisible}
+            isCameraActive={isCameraActive}
           />
         </group>
         <ComputerRotationHandler />
@@ -523,6 +526,12 @@ const ComputerPage = () => {
       <InfoButton
         onToggle={(isOn) => {
           setIsInfoVisible(isOn);
+          playClickSound();
+        }}
+      />
+      <CameraButton
+        onToggleCamera={(isOn) => {
+          setIsCameraActive(isOn);
           playClickSound();
         }}
       />
