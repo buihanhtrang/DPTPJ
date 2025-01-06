@@ -34,6 +34,12 @@ import { Computer } from "@/components/computer/component";
 import { StorageSSD } from "@/components/computer/StorageSSD";
 import CameraButton from "@/components/computer/CameraButton";
 
+const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+
+recognition.continuous = true; // Keep listening for multiple commands
+recognition.interimResults = false; // No need for intermediate results, just final ones
+recognition.lang = 'en-US'; // Set language to English
+
 const keyboardColor = "Keyboard Color";
 const screenColor = "Screen Color";
 const bodyColor = "Body Color";
@@ -107,6 +113,11 @@ const ComputerPage = () => {
   const [isHelpModalVisible, setIsHelpModalVisible] = useState(false);
   const [currentStep, setCurrentStep] = useState(1);
   const [isCameraActive, setIsCameraActive] = useState(false);
+
+  const [microphoneActive, setMicrophoneActive] = useState(false);
+  const [recognizedText, setRecognizedText] = useState("");
+  const [recognitionStatus, setRecognitionStatus] = useState("Waiting for command...");
+  const [isRecognitionStarted, setIsRecognitionStarted] = useState(false);
 
   const handleNext = () => {
     setCurrentStep((prev) => (prev < 2 ? prev + 1 : 1));
@@ -211,22 +222,164 @@ const ComputerPage = () => {
     setIsAudioPlaying(true);
   };
 
+  
+
   useEffect(() => {
     const defaultAudio = new Audio(AUDIO_PATHS.intro);
     setAudio(defaultAudio);
     defaultAudio.loop = true;
     defaultAudio.play();
     setIsAudioPlaying(true);
-
-    return () => {
-      if (defaultAudio) {
-        defaultAudio.pause();
+  
+    // Ensure recognition starts only if it's not already running
+    const startRecognition = () => {
+      if (!isRecognitionStarted) {
+        recognition.start();
+        setIsRecognitionStarted(true);
       }
     };
+
+    // Function to stop recognition
+    const stopRecognition = () => {
+      if (isRecognitionStarted) {
+        recognition.stop();
+        setIsRecognitionStarted(false);
+      }
+    };
+
+    if (microphoneActive) {
+      startRecognition();
+      setRecognitionStatus("Listening...");
+      // Pause music when microphone is on
+      if (audio) {
+        audio.pause();
+        setIsAudioPlaying(false);
+      }
+    } else {
+      stopRecognition();
+      setRecognitionStatus("Stopped listening.");
+    }
+  
+    recognition.onresult = (event) => {
+      const command = event.results[0][0].transcript.toLowerCase();
+      setRecognizedText(command); 
+  
+      // Handle recognized commands...
+      if (command.includes("start rotation")) {
+        setIsRotating(true);
+      } else if (command.includes("stop rotation")) {
+        setIsRotating(false);
+      } else if (command.includes("show menu")) {
+        setIsMenuVisible(true);
+      } else if (command.includes("hide menu")) {
+        setIsMenuVisible(false);
+      } else if (command.includes("coffee shop")) {
+        setSelectedRoom("coffee_shop");
+        toggleAudio("coffee_shop");
+      } else if (command.includes("outdoor")) {
+        setSelectedRoom("outdoor");
+        toggleAudio("outdoor");
+      } else if (command.includes("home")) {
+        setSelectedRoom("indoor");
+        toggleAudio("indoor");
+      } else if (command.includes("reset background")) {
+        resetBackground();
+      } else if (command.includes("play music")) {
+        handleAudioToggle();
+      } else if (command.includes("pause music")) {
+        handleAudioToggle();
+      }
+    };
+  
+    recognition.onend = () => {
+      if (microphoneActive) {
+        recognition.start(); // Restart recognition if the microphone is still active
+      }
+    };
+
+    // Cleanup: Ensure microphone is off when the component is unmounted or page is reloaded
+    const handleBeforeUnload = () => {
+      stopRecognition();
+    };
+
+    window.addEventListener("beforeunload", handleBeforeUnload);
+
+    return () => {
+      stopRecognition(); // Cleanup when the component unmounts
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+    };
+  }, [microphoneActive, isRecognitionStarted]);
+  
+  useEffect(() => {
+    // Ensure microphone is turned off when the page loads or reloads
+    setMicrophoneActive(false);
   }, []);
 
+  const toggleMicrophone = () => {
+    setMicrophoneActive((prevState) => !prevState);
+  };
+  
+
+  
+
   return (
+    
     <div className="page">
+    <div
+      className="menu-top-left"
+      style={{
+        position: "absolute",
+        top: "20px",
+        left: "20px",
+        zIndex: 10,
+        display: "flex",
+        flexDirection: "column",
+        gap: "10px",
+        backgroundColor: "rgba(0, 0, 0, 0.8)",
+        padding: "15px",
+        borderRadius: "10px",
+      }}
+    >
+      {/* Microphone Control Button */}
+      <button
+        onClick={toggleMicrophone}
+        className={`btn ${microphoneActive ? "btn-danger" : "btn-success"}`}
+        style={{
+          color: "#000",
+          fontWeight: "bold",
+        }}
+      >
+        {microphoneActive ? "Turn Off Microphone" : "Turn On Microphone"}
+      </button>
+
+      {/* Display the recognized text */}
+      {recognizedText && (
+        <div
+          className="recognized-text-box"
+          style={{
+            marginTop: "10px",
+            padding: "10px",
+            border: "1px solid #007bff",
+            backgroundColor: "#fff",
+            borderRadius: "5px",
+            color: "#000",
+          }}
+        >
+          <h3>Recognized Text:</h3>
+          <p>{recognizedText}</p>
+        </div>
+      )}
+
+      {/* Display the recognition status */}
+      <div
+        style={{
+          marginTop: "10px",
+          color: "#fff",
+        }}
+      >
+        <p>{recognitionStatus}</p>
+      </div>
+    </div>
       {/* Menu GUI */}
       <div
         className="menu"
@@ -362,6 +515,30 @@ const ComputerPage = () => {
         
           </>
         )}
+        {/* Speech Recognition UI */}
+  <button
+    style={{
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      backgroundColor: "#d9d9d9",
+      padding: "10px 15px",
+      borderRadius: "5px",
+      color: "#fff",
+      cursor: "pointer",
+    }}
+    onClick={() => {
+      // Trigger speech recognition function here
+      playClickSound();
+    }}
+  >
+    {/* You can place an icon or text for the speech recognition */}
+    <img
+        src="/assets/mic.png"  // Đường dẫn tới hình ảnh của bạn
+        alt="Microphone"
+        style={{ width: "10px", height: "15px" }}  // Thay đổi kích thước theo nhu cầu
+      />
+  </button>
         <button
           onClick={() => {
             setIsHelpModalVisible(true);
