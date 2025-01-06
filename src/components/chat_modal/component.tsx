@@ -6,6 +6,56 @@ const ChatModal = () => {
   const [isOpen, setIsOpen] = useState(false); // Modal toggle state
   const [input, setInput] = useState(''); // Current input message
   const [messages, setMessages] = useState([{ sender: 'AI', content: "Hello there! How can I help you today?" }]); // Chat history
+  const [isRecording, setIsRecording] = useState(false);
+
+  // Initialize Speech Recognition API
+  const recognition =
+    window.SpeechRecognition || window.webkitSpeechRecognition
+      ? new (window.SpeechRecognition || window.webkitSpeechRecognition)()
+      : null;
+  
+  if (!recognition) {
+    console.warn("Speech Recognition API is not supported in this browser.");
+  }
+  // Initialize Speech Synthesis API
+  const synth = window.speechSynthesis;
+
+  // Handle Text-to-Speech (TTS)
+  const handleTextToSpeech = (text) => {
+    if (!synth) {
+      console.warn("Speech Synthesis not supported in this browser.");
+      alert("Speech Synthesis not supported in this browser.");
+      return;
+    }
+
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = "en-US"; // Set language
+    synth.speak(utterance);
+  };
+
+  // Start Recording for Speech-to-Text (STT)
+  const startRecording = () => {
+    if (!recognition) {
+      console.warn("Speech Recognition not supported in this browser.");
+      alert("Speech Recognition not supported in this browser.");
+      return;
+    }
+
+    setIsRecording(true);
+    recognition.lang = "en-US"; // Set language
+    recognition.start();
+
+    recognition.onresult = (event) => {
+      const speechToText = event.results[0][0].transcript;
+      setInput(speechToText);
+      setIsRecording(false);
+    };
+
+    recognition.onerror = (event) => {
+      console.error("Speech recognition error:", event);
+      setIsRecording(false);
+    };
+  };
 
   // Toggle modal visibility
   const toggleModal = () => {
@@ -42,6 +92,9 @@ const ChatModal = () => {
       // Add AI's response to chat history
       const aiMessage = { sender: 'AI', content: aiResponse };
       setMessages((prevMessages) => [...prevMessages, aiMessage]);
+
+      // Trigger Text-to-Speech for bot response
+      handleTextToSpeech(aiResponse);
     }
   };
 
@@ -91,6 +144,13 @@ const ChatModal = () => {
               placeholder="Type your message..."
               className={styles.chatInput}
             />
+            <button
+              onClick={startRecording}
+              disabled={isRecording}
+              className="record-button"
+            >
+              {isRecording ? "Recording..." : "🎙️ Record"}
+            </button>
             <button type="submit" className={styles.sendButton}>
               Send
             </button>

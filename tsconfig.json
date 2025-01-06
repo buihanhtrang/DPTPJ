@@ -34,7 +34,8 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "build/types/**/*.ts"
+    "build/types/**/*.ts",
+    "src/components/chat_modal/speech-recognition.d.ts"
   ],
   "exclude": [
     "node_modules"
