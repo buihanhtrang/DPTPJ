@@ -23,9 +23,9 @@ import { motion } from "framer-motion";
 
 //API
 const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
-recognition.continuous = true; // Keep listening for multiple commands
-recognition.interimResults = false; // No need for intermediate results, just final ones
-recognition.lang = 'en-US'; // Set language to English
+recognition.continuous = true; 
+recognition.interimResults = false; 
+recognition.lang = 'en-US'; 
 
 // components
 import ConfiguratorComponent from "@/components/configurator/component";
@@ -55,8 +55,8 @@ const AUDIO_PATHS = {
   coffee_shop: "/assets/coffeeshop.mp3",
   outdoor: "/assets/outdoor.mp3",
   indoor: "/assets/home.mp3",
-  intro: "/assets/intro.mp3", // Music before selecting a room
-  click: "/assets/click.wav", // Click sound effect
+  intro: "/assets/intro.mp3", 
+  click: "/assets/click.wav", 
 };
 
 const playClickSound = () => {
@@ -75,7 +75,7 @@ const HDRILoader = ({ path }: { path: string }) => {
     scene.background = defaultColor;
     scene.environment = null;
 
-    const ambientLight = new THREE.AmbientLight(0xcccccc, 30); // Soft ambient light
+    const ambientLight = new THREE.AmbientLight(0xcccccc, 20); // Soft ambient light
     scene.add(ambientLight);
 
     if (path) {
@@ -109,7 +109,7 @@ const ComputerPage = () => {
   const [isConfiguratorOpen, setIsConfiguratorOpen] = useState(true);
   const [selectedRoom, setSelectedRoom] = useState<keyof typeof HDRI_PATHS | "">(""); 
   const [showSSD, setShowSSD] = useState(false);
-  const [isMenuVisible, setIsMenuVisible] = useState(true);
+  const [isMenuVisible, setIsMenuVisible] = useState(false);
   const [isInfoVisible, setIsInfoVisible] = useState(false);
   const [audio, setAudio] = useState<HTMLAudioElement | null>(null);
   const [isAudioPlaying, setIsAudioPlaying] = useState(false);
@@ -183,6 +183,7 @@ const ComputerPage = () => {
   const toggleAudio = (room: keyof typeof AUDIO_PATHS) => {
     if (audio) {
       audio.pause();
+      audio.currentTime = 0;
       setAudio(null);
     }
 
@@ -192,6 +193,10 @@ const ComputerPage = () => {
       newAudio.loop = true;
       newAudio.play();
       setIsAudioPlaying(true);
+
+      newAudio.addEventListener("ended", () => {
+        setIsAudioPlaying(false);
+      });
     } else {
       setIsAudioPlaying(false);
     }
@@ -213,10 +218,10 @@ const ComputerPage = () => {
     setSelectedRoom(""); 
     if (audio) {
       audio.pause();
+      audio.currentTime = 0;
       setAudio(null);
     }
     setIsAudioPlaying(false);
-    
     
     const introAudio = new Audio(AUDIO_PATHS.intro);
     setAudio(introAudio);
@@ -228,13 +233,13 @@ const ComputerPage = () => {
   
 
   useEffect(() => {
-    const defaultAudio = new Audio(AUDIO_PATHS.intro);
-    setAudio(defaultAudio);
-    defaultAudio.loop = true;
-    defaultAudio.play();
-    setIsAudioPlaying(true);
+    // const defaultAudio = new Audio(AUDIO_PATHS.intro);
+    // setAudio(defaultAudio);
+    // defaultAudio.loop = true;
+    // defaultAudio.play();
+    // setIsAudioPlaying(true);
   
-    // Ensure recognition starts only if it's not already running
+    // recognition starts only if it's not already running
     const startRecognition = () => {
       if (!isRecognitionStarted) {
         recognition.start();
@@ -242,7 +247,7 @@ const ComputerPage = () => {
       }
     };
 
-    // Function to stop recognition
+    // stop recognition
     const stopRecognition = () => {
       if (isRecognitionStarted) {
         recognition.stop();
@@ -250,24 +255,39 @@ const ComputerPage = () => {
       }
     };
 
-    if (microphoneActive) {
+    if (microphoneActive ) {
       startRecognition();
       setRecognitionStatus("Listening...");
       // Pause music when microphone is on
-      if (audio) {
-        audio.pause();
-        setIsAudioPlaying(false);
-      }
+      
     } else {
       stopRecognition();
       setRecognitionStatus("Stopped listening.");
     }
   
+    
     recognition.onresult = (event) => {
       const command = event.results[0][0].transcript.toLowerCase();
       setRecognizedText(command); 
-  
-      // Handle recognized commands...
+      
+      const extractColor = (command: string): string | undefined => {
+        const colorsMap: { [key: string]: string } = {
+          black: "#1e1e1e",
+          white: "#F8FAFC",
+          green: "#06D001",
+          yellow: "#FFE700",
+          blue: "#4CC9FE",
+          gray: "#A4A5A6",
+          red: "#BA3B2E",
+        };
+        const color = Object.keys(colorsMap).find((key) => command.includes(key)); 
+        return colorsMap[color || ""];
+      };
+    
+      const newColor = extractColor(command);
+      console.log(`Extracted color: ${newColor}`);
+
+      // Handle recognized commands
       if (command.includes("start rotation")) {
         setIsRotating(true);
       } else if (command.includes("stop rotation")) {
@@ -291,6 +311,26 @@ const ComputerPage = () => {
         handleAudioToggle();
       } else if (command.includes("pause music")) {
         handleAudioToggle();
+      } else if (command.includes("AR app")) {
+        setIsHelpModalVisible(true);
+        playClickSound();
+      } else if (command.includes("show information")) {
+        setIsInfoVisible(true); 
+      } else if (command.includes("hide information")) {
+        setIsInfoVisible(false); 
+      } else if (command.includes("turn off camera")) {
+        setIsCameraActive(false); 
+      } else if (command.includes("turn on camera")) {
+        setIsCameraActive(true); 
+      } else if (newColor) {
+        console.log(`Applying color: ${newColor}`);
+        if (command.includes("keyboard")) {
+          onSelectedColor("keyboardColor", newColor);
+        } else if (command.includes("body")) {
+          onSelectedColor("bodyColor", newColor);
+        } else if (command.includes("screen")) {
+          onSelectedColor("screenColor", newColor);
+        }
       }
     };
   
@@ -300,7 +340,7 @@ const ComputerPage = () => {
       }
     };
 
-    // Cleanup: Ensure microphone is off when the component is unmounted or page is reloaded
+    // Cleanup: microphone is off when the component is unmounted
     const handleBeforeUnload = () => {
       stopRecognition();
     };
@@ -308,13 +348,13 @@ const ComputerPage = () => {
     window.addEventListener("beforeunload", handleBeforeUnload);
 
     return () => {
-      stopRecognition(); // Cleanup when the component unmounts
+      stopRecognition(); 
       window.removeEventListener("beforeunload", handleBeforeUnload);
     };
   }, [microphoneActive, isRecognitionStarted]);
   
   useEffect(() => {
-    // Ensure microphone is turned off when the page loads or reloads
+    //microphone is off when the page loads or reloads
     setMicrophoneActive(false);
   }, []);
 
@@ -323,10 +363,9 @@ const ComputerPage = () => {
   };
   
 
-  
+
 
   return (
-    
     <div className="page">
       {isSpeechRecognitionVisible && (
       <div
@@ -361,7 +400,7 @@ const ComputerPage = () => {
         {microphoneActive ? "Turn off " : "Turn on "}
       </button>
 
-      {/* Display the recognized text */}
+      {/* Display the recognized script */}
       {recognizedText && (
         <div
           className="recognized-text-box"
@@ -544,17 +583,17 @@ const ComputerPage = () => {
       
     }}
   >
-    {/* You can place an icon or text for the speech recognition */}
+    {/* Speech recognition button */}
     <img
         src="/assets/mic.png"  // Đường dẫn tới hình ảnh của bạn
         alt="Microphone"
-        style={{ width: "10px", height: "15px" }}  // Thay đổi kích thước theo nhu cầu
+        style={{ width: "10px", height: "15px" }}  
       />
   </button>
         <button
           onClick={() => {
             setIsHelpModalVisible(true);
-            playClickSound();  // Gọi âm thanh khi nhấn nút "X"
+            playClickSound();  
           }}
           style={{
             backgroundColor: "#00ab41",
@@ -620,7 +659,7 @@ const ComputerPage = () => {
             
             {currentStep === 1 && (
               <div>
-                <p style={{ fontSize: "24px", marginBottom: "40px" }}>Step 1: Scan this to download the app on an Android mobile phone</p>
+                <p style={{ fontSize: "24px", marginBottom: "40px" }}>Step 1: Scan QR code to download the app on an Android mobile phone</p>
                 <img src="/assets/dpt.png" alt="" style={{ width: "50%" }} />
               </div>
             )}
