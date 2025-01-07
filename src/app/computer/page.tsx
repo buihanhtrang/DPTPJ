@@ -311,7 +311,7 @@ const ComputerPage = () => {
         handleAudioToggle();
       } else if (command.includes("pause music")) {
         handleAudioToggle();
-      } else if (command.includes("AR app")) {
+      } else if (command.includes("AR application") || command.includes("application")) {
         setIsHelpModalVisible(true);
         playClickSound();
       } else if (command.includes("show information")) {
