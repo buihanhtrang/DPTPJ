@@ -20,6 +20,13 @@ import { RGBELoader } from "three/examples/jsm/loaders/RGBELoader";
 import { useWindowWidth } from "@react-hook/window-size";
 import { motion } from "framer-motion";
 
+
+//API
+const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+recognition.continuous = true; // Keep listening for multiple commands
+recognition.interimResults = false; // No need for intermediate results, just final ones
+recognition.lang = 'en-US'; // Set language to English
+
 // components
 import ConfiguratorComponent from "@/components/configurator/component";
 import ColorPickerComponent from "@/components/color_picker/component";
@@ -94,11 +101,7 @@ const HDRILoader = ({ path }: { path: string }) => {
 };
 
 const ComputerPage = () => {
-  const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
-
-recognition.continuous = true; // Keep listening for multiple commands
-recognition.interimResults = false; // No need for intermediate results, just final ones
-recognition.lang = 'en-US'; // Set language to English
+  
 
   const width = useWindowWidth();
   const isMobile = width < 800;
