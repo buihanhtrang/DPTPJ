@@ -19,6 +19,8 @@ import * as THREE from "three";
 import { RGBELoader } from "three/examples/jsm/loaders/RGBELoader";
 import { useWindowWidth } from "@react-hook/window-size";
 import { motion } from "framer-motion";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHome } from "@fortawesome/free-solid-svg-icons";
 
 
 //API
@@ -386,6 +388,7 @@ const ComputerPage = () => {
         borderRadius: "10px",
       }}
     >
+
       {/* Microphone Control Button */}
       <button
         onClick={toggleMicrophone}
@@ -420,8 +423,7 @@ const ComputerPage = () => {
           <h3 style={{fontWeight: "300"}}>Recognized Script:</h3>
           <p style={{fontSize: 30, color: "blue", fontWeight: "bold"}}>{recognizedText}</p>
         </div>
-      )}
-
+      )}    
       {/* Display the recognition status */}
       <div
         style={{
@@ -432,6 +434,39 @@ const ComputerPage = () => {
         <p>{recognitionStatus}</p>
       </div>
     </div>)}
+
+    {/* Back to Homepage Button with Icon */}
+    <div
+            style={{
+              position: "absolute",
+              zIndex: 10,
+              display: "flex",
+              flexDirection: "column",
+              gap: "10px",
+              backgroundColor: "rgba(34, 100, 158, 0.15)",
+              padding: "15px",
+              borderRadius: "10px",
+    }}
+      >
+      <button
+        onClick={() => window.location.href = "/"} // Redirect to homepage
+        style={{
+          backgroundColor: "#007bff",
+          color: "white",
+          padding: "10px 20px",
+          borderRadius: "5px",
+          border: "none",
+          fontWeight: "bold",
+          fontSize: "16px",
+          display: "flex",
+          alignItems: "center",
+        }}
+      >
+            <FontAwesomeIcon icon={faHome} style={{ fontSize: "20px", marginRight: "10px" }} />
+            Back to Homepage
+      </button>
+      </div>
+
       {/* Menu GUI */}
       <div
         className="menu"

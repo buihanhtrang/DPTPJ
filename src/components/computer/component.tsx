@@ -278,7 +278,6 @@ export function Computer({ bodyColor, screenColor, keyboardColor, setShowSSD, is
                 </Text>
               </mesh>
               {isInfoVisible && (
-                <>
                   <InfoMesh 
                     rotation={[Math.PI / 2, Math.PI, 0]} 
                     position={[-0.45, 0.05, -1.4]} 
@@ -286,14 +285,6 @@ export function Computer({ bodyColor, screenColor, keyboardColor, setShowSSD, is
                       e.stopPropagation();
                       handleInfoToggle("info1");} } 
                   />
-                  <InfoMesh 
-                    rotation={[Math.PI / 2, Math.PI, 0]} 
-                    position={[-2, 0.05, -1]} 
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handleInfoToggle("info2");} }
-                  />
-                </>
               )}
               <group>
                 {isInfoVisible && visibleInfo === "info1" && (
@@ -326,6 +317,14 @@ export function Computer({ bodyColor, screenColor, keyboardColor, setShowSSD, is
                   </group>
                 )}
 
+              {isInfoVisible && (
+                  <InfoMesh 
+                    rotation={[-Math.PI/2, 0, 0]} 
+                    position={[1, 0.1, 0]} 
+                    onClick={() => handleInfoToggle("info2")} 
+                  />
+
+              )}
                 {isInfoVisible && visibleInfo === "info2" && (
                   <group rotation={[Math.PI / 2, Math.PI, -Math.PI/2]} position={[-2, 0.2, -2.8]}>
                     <mesh>
@@ -668,4 +667,3 @@ export function Computer({ bodyColor, screenColor, keyboardColor, setShowSSD, is
 }
 
 useGLTF.preload("/assets/gaming_laptop/scene-1.glb");
-

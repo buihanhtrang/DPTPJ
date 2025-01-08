@@ -12,6 +12,8 @@
   "dependencies": {
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
+    "@fortawesome/free-solid-svg-icons": "^6.7.2",
+    "@fortawesome/react-fontawesome": "^0.2.2",
     "@mediapipe/camera_utils": "^0.3.1675466862",
     "@mediapipe/hands": "^0.4.1675469240",
     "@mui/material": "^5.14.0",
@@ -20,13 +22,16 @@
     "@react-three/fiber": "^8.13.4",
     "@tensorflow-models/handpose": "^0.1.0",
     "@tensorflow/tfjs": "^4.22.0",
+    "@tensorflow/tfjs-node": "^4.22.0",
     "@types/node": "20.4.1",
     "@types/react": "18.2.14",
     "@types/react-dom": "18.2.6",
     "@types/three": "^0.153.0",
     "axios": "^1.7.9",
+    "canvas": "^3.0.1",
     "eslint": "8.44.0",
     "eslint-config-next": "13.4.9",
+    "face-api.js": "^0.22.2",
     "framer-motion": "^10.12.18",
     "handtrackjs": "^0.1.5",
     "moment": "^2.29.4",
@@ -39,6 +44,7 @@
     "typescript": "5.1.6"
   },
   "devDependencies": {
-    "encoding": "^0.1.13"
+    "encoding": "^0.1.13",
+    "html-loader": "^5.1.0"
   }
 }
