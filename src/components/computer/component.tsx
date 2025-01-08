@@ -63,6 +63,7 @@ export function Computer({ bodyColor, screenColor, keyboardColor, setShowSSD, is
   const buttonRef = React.useRef<THREE.Mesh>(null);
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const videoTexture = useRef<THREE.VideoTexture | null>(null);
+  const cameraTexture = useRef<THREE.VideoTexture | null>(null);
 
   const [isFloating, setIsFloating] = useState(false);
   const [visibleInfo, setVisibleInfo] = useState(null);
@@ -150,6 +151,41 @@ export function Computer({ bodyColor, screenColor, keyboardColor, setShowSSD, is
     };
   }, [isCameraActive, setShowSSD]);
   
+  useEffect(() => {
+    const setupCameraStream = async () => {
+      if (!isCameraActive) return; // Chỉ bật khi camera active
+
+      try {
+        const video = document.createElement('video');
+        const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+        video.srcObject = stream;
+        video.play();
+        videoRef.current = video;
+
+        // Tạo VideoTexture từ camera
+        cameraTexture.current = new THREE.VideoTexture(video);
+        cameraTexture.current.minFilter = THREE.LinearFilter;
+        cameraTexture.current.magFilter = THREE.LinearFilter;
+        cameraTexture.current.format = THREE.RGBAFormat;
+      } catch (error) {
+        console.error('Error accessing camera:', error);
+      }
+    };
+
+    setupCameraStream();
+
+    return () => {
+      // Cleanup camera stream
+      if (videoRef.current) {
+        const stream = videoRef.current.srcObject as MediaStream;
+        if (stream && stream.getTracks) {
+          stream.getTracks().forEach((track) => track.stop());
+        }
+        videoRef.current.pause();
+        videoRef.current.srcObject = null;
+      }
+    };
+  }, [isCameraActive]);
 
   const countFingers = (landmarks) => {
     let count = 0;
@@ -358,7 +394,7 @@ export function Computer({ bodyColor, screenColor, keyboardColor, setShowSSD, is
               >
                 
                   <meshStandardMaterial
-                  map={isPlaying && videoTexture.current ? videoTexture.current : null}
+                  map={cameraTexture.current ? cameraTexture.current : (isPlaying && videoTexture.current ? videoTexture.current : null)}
                   attach="material"
                   {...(!isPlaying && materials.Material_4)}
                 />
