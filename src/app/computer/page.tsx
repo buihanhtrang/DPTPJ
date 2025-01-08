@@ -30,6 +30,7 @@ recognition.lang = 'en-US';
 // components
 import ConfiguratorComponent from "@/components/configurator/component";
 import ColorPickerComponent from "@/components/color_picker/component";
+import AnimationComponent from "@/components/animation/component";
 import InfoButton from "@/components/showinfo/InfoButton";
 
 // models
@@ -75,7 +76,7 @@ const HDRILoader = ({ path }: { path: string }) => {
     scene.background = defaultColor;
     scene.environment = null;
 
-    const ambientLight = new THREE.AmbientLight(0xcccccc, 20); // Soft ambient light
+    const ambientLight = new THREE.AmbientLight(0x686868, 20); // Soft ambient light
     scene.add(ambientLight);
 
     if (path) {
@@ -713,10 +714,14 @@ const ComputerPage = () => {
       <Canvas shadows camera={{ position: [5, 0, 15], fov: 30 }} style={{ width: "100vw", height: "100vh" }}>
         <HDRILoader path={selectedRoom ? HDRI_PATHS[selectedRoom] : ""} />
 
+        <spotLight position={[0, 15, 0]} angle={0.3} penumbra={1} castShadow intensity={2} shadow-bias={-0.0001} /> 
+        <ambientLight color='gray' />
+
+
         <AccumulativeShadows position={[0, -2, 0]} frames={100} alphaTest={0.9} scale={50}>
           <RandomizedLight amount={8} radius={10} ambient={0.5} position={[1, 5, -1]} />
         </AccumulativeShadows>
-
+        <AnimationComponent />
         <OrbitControls />
 
         <group
@@ -737,6 +742,7 @@ const ComputerPage = () => {
             isCameraActive={isCameraActive}
           />
         </group>
+
         <ComputerRotationHandler />
         {showSSD && (
           <a.group position={props.position.to((x, y, z) => [x, y, z])}>
