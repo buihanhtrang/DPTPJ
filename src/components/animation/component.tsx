@@ -32,13 +32,13 @@ const UFOComponent: React.FC<UFOProps> = ({ isVisible }) => {
   return (
     <>
       {/* Glowing Ring */}
-      <Float speed={2} floatIntensity={2} rotationIntensity={1}>
+      <Float speed={5} floatIntensity={2} rotationIntensity={1}>
         <Lightformer
           form="ring"
-          color="blue"
+          color="darkgreen"
           intensity={2}
           scale={10}
-          position={[0, 2, -10]} // Ring position
+          position={[-15, 4, -18]} // Ring position
         />
       </Float>
 
@@ -46,8 +46,8 @@ const UFOComponent: React.FC<UFOProps> = ({ isVisible }) => {
       <primitive
         ref={ufoRef}
         object={ufo.scene}
-        scale={[0.5, 0.5, 0.5]} // UFO scale
-        position={[0, 2, -10]} // Initial position
+        // scale={[2, 2, 2]} // UFO scale
+        position={[-10, 2, -18]} // Initial position
       />
     </>
   );

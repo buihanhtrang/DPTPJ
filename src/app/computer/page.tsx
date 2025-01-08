@@ -497,6 +497,7 @@ const ComputerPage = () => {
             >
               Coffee Shop
             </button>
+
             <button
               onClick={() => {
                 setSelectedRoom("outdoor");
@@ -514,6 +515,7 @@ const ComputerPage = () => {
             >
               Outdoor
             </button>
+
             <button
               onClick={() => {
                 setSelectedRoom("indoor");
@@ -531,6 +533,7 @@ const ComputerPage = () => {
             >
               Home
             </button>
+
             <button
               onClick={() => {
                 resetBackground();
@@ -547,6 +550,7 @@ const ComputerPage = () => {
             >
               Reset Background
             </button>
+
             <button
               onClick={() => {
                 handleAudioToggle();
@@ -563,35 +567,51 @@ const ComputerPage = () => {
             >
               {isAudioPlaying ? "Pause Music" : "Play Music"}
             </button>
-        
-          </>
+        </>
         )}
-        {/* Speech Recognition UI */}
-  <button
-    style={{
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
-      backgroundColor: isSpeechRecognitionVisible ?  "BA3B2E" : "#d9d9d9" ,
-      padding: "10px 15px",
-      borderRadius: "5px",
-      color: "#fff",
-      cursor: "pointer",
-    }}
-    onClick={() => {
+          {/* Speech Recognition UI */}
+        <button
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            backgroundColor: isSpeechRecognitionVisible ?  "BA3B2E" : "#d9d9d9" ,
+            padding: "10px 15px",
+            borderRadius: "5px",
+            color: "#fff",
+            cursor: "pointer",
+          }}
+          onClick={() => {
 
         setIsSpeechRecognitionVisible((prev) => !prev);
         playClickSound();
       
-    }}
-  >
-    {/* Speech recognition button */}
-    <img
-        src="/assets/mic.png"  // Đường dẫn tới hình ảnh của bạn
-        alt="Microphone"
-        style={{ width: "10px", height: "15px" }}  
-      />
-  </button>
+        }}
+        >
+        {/* Speech recognition button */}
+          <img
+              src="/assets/mic.png"  // Đường dẫn tới hình ảnh của bạn
+              alt="Microphone"
+              style={{ width: "10px", height: "15px" }}  
+            />
+        </button>
+                    
+        {/* Toggle Button for UFO */}
+        <button
+              onClick={() => setIsMotionVisible(!isMotionVisible)}
+              style={{
+                backgroundColor: "#00ab41",
+                color: "#fff",
+                padding: "10px 20px",
+                borderRadius: "5px",
+                border: "none",
+                cursor: "pointer",
+                fontWeight: "bold",
+              }}
+            >
+              {isMotionVisible ? "Hide UFO Motion" : "Show UFO Motion"}
+        </button>
+
         <button
           onClick={() => {
             setIsHelpModalVisible(true);
@@ -706,20 +726,6 @@ const ComputerPage = () => {
             }}
             >
             {">"}
-            </button>
-                        {/* Toggle Button for UFO */}
-                        <button
-              onClick={() => setIsMotionVisible(!isMotionVisible)}
-              style={{
-                position: "absolute",
-                top: "20px",
-                right: "20px",
-                padding: "10px 20px",
-                fontSize: "16px",
-                zIndex: 10,
-              }}
-            >
-              {isMotionVisible ? "Hide UFO Motion" : "Show UFO Motion"}
             </button>
             </div>  
           </div>
