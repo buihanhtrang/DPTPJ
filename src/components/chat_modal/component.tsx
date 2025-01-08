@@ -7,6 +7,7 @@ const ChatModal = () => {
   const [input, setInput] = useState(''); // Current input message
   const [messages, setMessages] = useState([{ sender: 'AI', content: "Hello there! How can I help you today?" }]); // Chat history
   const [isRecording, setIsRecording] = useState(false);
+  const [isMaleVoice, setIsMaleVoice] = useState(true); // Default: male voice
 
   // Initialize Speech Recognition API
   const recognition =
@@ -19,17 +20,33 @@ const ChatModal = () => {
   }
   // Initialize Speech Synthesis API
   const synth = window.speechSynthesis;
+  const voices = synth.getVoices();
+  console.log("Found voices: ", voices);
 
-  // Handle Text-to-Speech (TTS)
   const handleTextToSpeech = (text) => {
     if (!synth) {
       console.warn("Speech Synthesis not supported in this browser.");
       alert("Speech Synthesis not supported in this browser.");
       return;
     }
-
+  
     const utterance = new SpeechSynthesisUtterance(text);
     utterance.lang = "en-US"; // Set language
+  
+    // Sử dụng hai giọng cụ thể
+    const maleVoiceName = "Microsoft Mark - English (United States)";
+    const femaleVoiceName = "Microsoft Zira - English (United States)";
+    const selectedVoice = voices.find(
+      (voice) => voice.name === (isMaleVoice ? maleVoiceName : femaleVoiceName)
+    );
+
+    if (selectedVoice) {
+      utterance.voice = selectedVoice;
+      console.log("Selected: ", selectedVoice);
+    } else {
+      console.log("Selected voice not found. Using default voice.");
+    }
+  
     synth.speak(utterance);
   };
 
@@ -66,7 +83,7 @@ const ChatModal = () => {
     const formattedMessage = message
       .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') // Bold
       .replace(/_(.*?)_/g, '<em>$1</em>') // Italics
-      .replace(/`(.*?)`/g, '<code>$1</code>') // Inline code
+      .replace(/(.*?)/g, '<code>$1</code>') // Inline code
       .replace(/\n/g, '<br>'); // New lines
 
     return { __html: formattedMessage };
@@ -110,6 +127,13 @@ const ChatModal = () => {
         <div className={styles.chatModal}>
           <div className={styles.modalHeader}>
             <h3>AI Assistant</h3>
+            <button
+              className={styles.toggleVoiceButton}
+              onClick={() => setIsMaleVoice((prev) => !prev)}
+            >
+              {isMaleVoice ? "Male Voice" : "Female Voice"}
+            </button>
+
             <button className={styles.closeButton} onClick={toggleModal}>
               ✖
             </button>
