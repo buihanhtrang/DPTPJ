@@ -1,86 +1,56 @@
-import React, { useRef, useState } from "react";
+// src/components/UFOComponent.tsx
+
+import React, { useRef } from "react";
 import { Float, Lightformer, useGLTF } from "@react-three/drei";
-import { Canvas, useFrame } from "@react-three/fiber";
+import { useFrame } from "@react-three/fiber";
 
-function UFOScene({ isVisible }: { isVisible: boolean }) {
+interface UFOProps {
+  isVisible: boolean;
+}
+
+const UFOComponent: React.FC<UFOProps> = ({ isVisible }) => {
   const ufoRef = useRef<any>(null);
-
-  // Load the UFO model
-  const ufo = useGLTF("/path/to/ufo-model.glb");
+  const ufo = useGLTF("assets/ufo/ufo2.glb"); // Replace with your actual model path
 
   useFrame((state, delta) => {
     if (ufoRef.current && isVisible) {
       const time = state.clock.elapsedTime;
 
-      // UFO Movement: Emerge from the ring and move upwards
-      ufoRef.current.position.y = Math.sin(time) * 1.5; // Up and down oscillation
+      // UFO movement logic
+      ufoRef.current.position.y = Math.sin(time) * 1.5; // Float up and down
       ufoRef.current.position.z += delta * 5; // Move forward
 
-      // Reset position when the UFO moves too far
+      // Reset when it goes out of bounds
       if (ufoRef.current.position.z > 20) {
-        ufoRef.current.position.z = -10; // Reset position
+        ufoRef.current.position.z = -10;
       }
     }
   });
 
-  if (!isVisible) return null; // Hide UFOScene if isVisible is false
+  if (!isVisible) return null; // Hide UFO if not visible
 
   return (
     <>
-      {/* Emitting Ring */}
+      {/* Glowing Ring */}
       <Float speed={2} floatIntensity={2} rotationIntensity={1}>
         <Lightformer
           form="ring"
           color="blue"
           intensity={2}
           scale={10}
-          position={[0, 2, -10]} // Position of the ring
+          position={[0, 2, -10]} // Ring position
         />
       </Float>
 
-      {/* UFO Model */}
+      {/* UFO */}
       <primitive
         ref={ufoRef}
         object={ufo.scene}
-        scale={[0.5, 0.5, 0.5]} // Adjust the size of the UFO
-        position={[0, 2, -10]} // Initial position at the center of the ring
+        scale={[0.5, 0.5, 0.5]} // UFO scale
+        position={[0, 2, -10]} // Initial position
       />
-
-      {/* Background */}
-      <mesh scale={100}>
-        <sphereGeometry args={[1, 64, 64]} />
-        <meshBasicMaterial color="black" side={2} />
-      </mesh>
     </>
   );
-}
+};
 
-function App() {
-  const [isVisible, setIsVisible] = useState(true);
-
-  return (
-    <div style={{ width: "100vw", height: "100vh", position: "relative" }}>
-      {/* 3D Scene */}
-      <Canvas>
-        <UFOScene isVisible={isVisible} />
-      </Canvas>
-
-      {/* Button to toggle UFO visibility */}
-      <button
-        onClick={() => setIsVisible(!isVisible)}
-        style={{
-          position: "absolute",
-          top: "20px",
-          left: "20px",
-          padding: "10px 20px",
-          fontSize: "16px",
-          zIndex: 10,
-        }}
-      >
-        {isVisible ? "Hide UFO" : "Show UFO"}
-      </button>
-    </div>
-  );
-}
-
-export default App;
+export default UFOComponent;

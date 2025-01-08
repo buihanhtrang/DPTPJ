@@ -30,7 +30,7 @@ recognition.lang = 'en-US';
 // components
 import ConfiguratorComponent from "@/components/configurator/component";
 import ColorPickerComponent from "@/components/color_picker/component";
-import AnimationComponent from "@/components/animation/component";
+import UFOComponent from "@/components/animation/component";
 import InfoButton from "@/components/showinfo/InfoButton";
 
 // models
@@ -108,6 +108,7 @@ const ComputerPage = () => {
   const isMobile = width < 800;
 
   const [isConfiguratorOpen, setIsConfiguratorOpen] = useState(true);
+  const [isMotionVisible, setIsMotionVisible] = useState(true);
   const [selectedRoom, setSelectedRoom] = useState<keyof typeof HDRI_PATHS | "">(""); 
   const [showSSD, setShowSSD] = useState(false);
   const [isMenuVisible, setIsMenuVisible] = useState(false);
@@ -706,6 +707,20 @@ const ComputerPage = () => {
             >
             {">"}
             </button>
+                        {/* Toggle Button for UFO */}
+                        <button
+              onClick={() => setIsMotionVisible(!isMotionVisible)}
+              style={{
+                position: "absolute",
+                top: "20px",
+                right: "20px",
+                padding: "10px 20px",
+                fontSize: "16px",
+                zIndex: 10,
+              }}
+            >
+              {isMotionVisible ? "Hide UFO Motion" : "Show UFO Motion"}
+            </button>
             </div>  
           </div>
         </div>
@@ -721,7 +736,7 @@ const ComputerPage = () => {
         <AccumulativeShadows position={[0, -2, 0]} frames={100} alphaTest={0.9} scale={50}>
           <RandomizedLight amount={8} radius={10} ambient={0.5} position={[1, 5, -1]} />
         </AccumulativeShadows>
-        <AnimationComponent />
+        <UFOComponent isVisible={isMotionVisible} />
         <OrbitControls />
 
         <group
@@ -757,6 +772,7 @@ const ComputerPage = () => {
           </Text3D>
         </group>
       </Canvas>
+
       <InfoButton
         onToggle={(isOn) => {
           setIsInfoVisible(isOn);
