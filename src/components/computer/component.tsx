@@ -230,7 +230,6 @@ export function Computer({ bodyColor, screenColor, keyboardColor, setShowSSD, is
       bodyColorProps['material-color'] = bodyColor
   }
   
-
   let screenColorProps: ColorProps = {}
   if(screenColor != null) {
       screenColorProps['material-color'] = screenColor
@@ -452,9 +451,9 @@ export function Computer({ bodyColor, screenColor, keyboardColor, setShowSSD, is
                   receiveShadow
                   geometry={nodes.Object_8.geometry}
                   material={materials.Material_5}
-                  { ...bodyColorProps }
-
+                  { ...screenColorProps }
                 />
+                
                 <mesh
                   name="Object_9"
                   castShadow
@@ -475,7 +474,7 @@ export function Computer({ bodyColor, screenColor, keyboardColor, setShowSSD, is
                   receiveShadow
                   geometry={nodes.Object_11.geometry}
                   material={materials.Material_13}
-                  { ...bodyColorProps }
+                  { ...screenColorProps }
                 />
               </animated.group>
 
@@ -611,6 +610,7 @@ export function Computer({ bodyColor, screenColor, keyboardColor, setShowSSD, is
                   receiveShadow
                   geometry={nodes.Object_13.geometry}
                   material={materials.Material_8}
+                  { ...bodyColorProps }
                 />
                 <mesh
                   name="Object_14"

@@ -60,6 +60,7 @@ const AUDIO_PATHS = {
   click: "/assets/click.wav", 
 };
 
+
 const playClickSound = () => {
   const audio = new Audio(AUDIO_PATHS.click);
   audio.play();
@@ -460,7 +461,24 @@ const ComputerPage = () => {
                 }}
               >
                 {isRotating ? "Stop Rotation" : "Start Rotation"} 
-            </button>
+        </button>
+
+        {/* Toggle Button for UFO */}
+        <button
+              onClick={() => setIsMotionVisible(!isMotionVisible)}
+              style={{
+                backgroundColor: isRotating ? "#BA3B2E" : "#00ab41",
+                color: "#fff",
+                padding: "10px 20px",
+                borderRadius: "5px",
+                border: "none",
+                cursor: "pointer",
+                fontWeight: "bold",
+                }}
+              >
+              {isMotionVisible ? "Hide UFO Motion" : "Show UFO Motion"}
+        </button>
+            
         <button
           onClick={() => {
             setIsMenuVisible((prev) => !prev);
@@ -567,6 +585,7 @@ const ComputerPage = () => {
             >
               {isAudioPlaying ? "Pause Music" : "Play Music"}
             </button>
+
         </>
         )}
           {/* Speech Recognition UI */}
@@ -594,22 +613,6 @@ const ComputerPage = () => {
               alt="Microphone"
               style={{ width: "10px", height: "15px" }}  
             />
-        </button>
-                    
-        {/* Toggle Button for UFO */}
-        <button
-              onClick={() => setIsMotionVisible(!isMotionVisible)}
-              style={{
-                backgroundColor: "#00ab41",
-                color: "#fff",
-                padding: "10px 20px",
-                borderRadius: "5px",
-                border: "none",
-                cursor: "pointer",
-                fontWeight: "bold",
-              }}
-            >
-              {isMotionVisible ? "Hide UFO Motion" : "Show UFO Motion"}
         </button>
 
         <button
@@ -734,14 +737,16 @@ const ComputerPage = () => {
 
       <Canvas shadows camera={{ position: [5, 0, 15], fov: 30 }} style={{ width: "100vw", height: "100vh" }}>
         <HDRILoader path={selectedRoom ? HDRI_PATHS[selectedRoom] : ""} />
-
+        <ambientLight color='red' intensity={0.5} />
         <spotLight position={[0, 15, 0]} angle={0.3} penumbra={1} castShadow intensity={2} shadow-bias={-0.0001} /> 
+        <spotLight position={[-8, -1, 0]} angle={1} penumbra={1} castShadow intensity={2} shadow-bias={-0.0001} />
         <ambientLight color='gray' />
 
 
         <AccumulativeShadows position={[0, -2, 0]} frames={100} alphaTest={0.9} scale={50}>
           <RandomizedLight amount={8} radius={10} ambient={0.5} position={[1, 5, -1]} />
         </AccumulativeShadows>
+
         <UFOComponent isVisible={isMotionVisible} />
         <OrbitControls />
 
