@@ -21,7 +21,6 @@ const ChatModal = () => {
   // Initialize Speech Synthesis API
   const synth = window.speechSynthesis;
   const voices = synth.getVoices();
-  console.log("Found voices: ", voices);
 
   const handleTextToSpeech = (text) => {
     if (!synth) {
@@ -42,7 +41,6 @@ const ChatModal = () => {
 
     if (selectedVoice) {
       utterance.voice = selectedVoice;
-      console.log("Selected: ", selectedVoice);
     } else {
       console.log("Selected voice not found. Using default voice.");
     }
