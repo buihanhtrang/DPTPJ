@@ -69,7 +69,59 @@ export function Computer({ bodyColor, screenColor, keyboardColor, setShowSSD, is
   const [visibleInfo, setVisibleInfo] = useState(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
+  const [modelPosition, setModelPosition] = useState(new THREE.Vector3(0, 0, 0));
   
+  const moveModel = (direction: string) => {
+    const newPosition = modelPosition.clone();
+    switch (direction) {
+      case "up":
+        newPosition.y += 0.1;
+        break;
+      case "down":
+        newPosition.y -= 0.1;
+        break;
+      case "left":
+        newPosition.x -= 0.1;
+        break;
+      case "right":
+        newPosition.x += 0.1;
+        break;
+      case "forward":
+        newPosition.z -= 0.1;
+        break;
+      case "backward":
+        newPosition.z += 0.1;
+        break;
+      default:
+        break;
+    }
+    setModelPosition(newPosition);
+  };
+
+  const Button = ({ rotation, position, label, color, onClick }: any) => (
+    <mesh
+      rotation={rotation}
+      position={position}
+      onClick={onClick}
+      onPointerOver={() => (document.body.style.cursor = "pointer")}
+      onPointerOut={() => (document.body.style.cursor = "default")}
+    >
+      {/* Arrow Geometry */}
+      <coneGeometry args={[0.2, 0.4, 32]} />
+      <meshStandardMaterial color={color} />
+
+      {/* Button Label */}
+      {/* <Text
+        position={[0, 0, 0.05]} // Slightly above the button
+        fontSize={0.12}
+        color="black"
+        anchorX="center"
+        anchorY="middle"
+      >
+        {label}
+      </Text> */}
+    </mesh>
+  );
 
   const { Object16Position } = useSpring({
     Object16Position: isFloating ? [0, 1, 0] : [0, 0, 0], 
@@ -222,8 +274,7 @@ export function Computer({ bodyColor, screenColor, keyboardColor, setShowSSD, is
 
   const handlePreviousVideo = () => {
     setCurrentVideoIndex(
-      (prevIndex) => (prevIndex - 1 + videoUrls.length) % videoUrls.length
-    );
+      (prevIndex) => (prevIndex - 1 + videoUrls.length) % videoUrls.length);
   };
   let bodyColorProps: ColorProps = {}
   if(bodyColor != null) {
@@ -240,7 +291,8 @@ export function Computer({ bodyColor, screenColor, keyboardColor, setShowSSD, is
       keyboardColorProps['material-color'] = keyboardColor
   }
   return (
-    <group dispose={null}>
+    <>
+    <group dispose={null} position={modelPosition.toArray()}>
       <group name="Scene">
         <group name="Sketchfab_model" 
         scale={[0.5, 0.5, 0.5]}
@@ -259,7 +311,7 @@ export function Computer({ bodyColor, screenColor, keyboardColor, setShowSSD, is
                 onPointerOut={() => (document.body.style.cursor = "default")}
               >
                 <circleGeometry args={[0.1, 30]} /> 
-                <meshStandardMaterial color="black" transparent opacity={0.6} />
+                <meshStandardMaterial color="white" transparent opacity={0.6} />
 
                 <mesh>
                   <ringGeometry args={[0.1, 0.12, 64]} /> 
@@ -661,8 +713,50 @@ export function Computer({ bodyColor, screenColor, keyboardColor, setShowSSD, is
         </group>
       </group>
     </group>
-    
-
+      {/* Movement Buttons */}
+      <Button
+        rotation={[0, -Math.PI / 6, 0]}
+        position={[4, 0.6, -1]}
+        label="Up"
+        color ="green"
+        onClick={() => moveModel("up")}
+      />
+      <Button
+        rotation={[Math.PI, -Math.PI / 6, 0]}
+        position={[4, -0.6, -1]}
+        label="Down"
+        color ="green"
+        onClick={() => moveModel("down")}
+      />
+      <Button
+        rotation={[0, -Math.PI / 6, Math.PI/2]}
+        position={[3.4, 0, -1]}
+        label="Left"
+        color ="green"
+        onClick={() => moveModel("left")}
+      />
+      <Button
+        rotation={[0, -Math.PI / 6, -Math.PI/2]}
+        position={[4.6, 0, -0.7]}
+        label="Right"
+        color ="green"
+        onClick={() => moveModel("right")}
+      />
+      <Button
+        rotation={[-Math.PI/2, -Math.PI / 6, 0]}
+        position={[4, 0, -1.7]}
+        label="Forward"
+        color ="green"
+        onClick={() => moveModel("forward")}
+      />
+      <Button
+        rotation={[Math.PI/2, -Math.PI / 6, 0]}
+        position={[4, 0, -0.4]}
+        label="Backward"
+        color ="green"
+        onClick={() => moveModel("backward")}
+      />
+  </>
   );
 }
 
