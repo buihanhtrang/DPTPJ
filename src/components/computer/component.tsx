@@ -535,7 +535,7 @@ export function Computer({ bodyColor, screenColor, keyboardColor, setShowSSD, is
               >
                 <mesh
                 ref={buttonRef} 
-                position={[-0.4, 0.2, 1.8]}
+                position={[-0.4, 0.3, 1.8]}
                 rotation={[0, Math.PI/2, (-(Math.PI)*90) /180]}
                 onClick={() => setShowSSD((prev) => !prev)}
                 onPointerOver={() => (document.body.style.cursor = "pointer")}
@@ -713,6 +713,7 @@ export function Computer({ bodyColor, screenColor, keyboardColor, setShowSSD, is
         </group>
       </group>
     </group>
+
       {/* Movement Buttons */}
       <Button
         rotation={[0, -Math.PI / 6, 0]}
@@ -732,28 +733,28 @@ export function Computer({ bodyColor, screenColor, keyboardColor, setShowSSD, is
         rotation={[0, -Math.PI / 6, Math.PI/2]}
         position={[3.4, 0, -1]}
         label="Left"
-        color ="green"
+        color ="lightgreen"
         onClick={() => moveModel("left")}
       />
       <Button
         rotation={[0, -Math.PI / 6, -Math.PI/2]}
         position={[4.6, 0, -0.7]}
         label="Right"
-        color ="green"
+        color ="lightgreen"
         onClick={() => moveModel("right")}
       />
       <Button
         rotation={[-Math.PI/2, -Math.PI / 6, 0]}
         position={[4, 0, -1.7]}
         label="Forward"
-        color ="green"
+        color ="darkgreen"
         onClick={() => moveModel("forward")}
       />
       <Button
         rotation={[Math.PI/2, -Math.PI / 6, 0]}
         position={[4, 0, -0.4]}
         label="Backward"
-        color ="green"
+        color ="darkgreen"
         onClick={() => moveModel("backward")}
       />
   </>
