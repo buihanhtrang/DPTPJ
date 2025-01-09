@@ -372,7 +372,7 @@ export function Computer({ bodyColor, screenColor, keyboardColor, setShowSSD, is
               {isInfoVisible && (
                   <InfoMesh 
                     rotation={[-Math.PI/2, 0, 0]} 
-                    position={[1, 0.1, 0]} 
+                    position={[-2, 0.1, -2]} 
                     onClick={() => handleInfoToggle("info2")} 
                   />
 
