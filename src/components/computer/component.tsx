@@ -172,6 +172,52 @@ export function Computer({ bodyColor, screenColor, keyboardColor, setShowSSD, is
       // Nhận diện bàn tay
       const detectHands = async () => {
         if (!isCameraActive) return; // Dừng nếu camera tắt
+
+        // Hàm phát hiện "Thumbs Up"
+        const isThumbsUp = (landmarks) => {
+        const thumbTip = landmarks[4]; // Đỉnh ngón cái
+        const thumbBase = landmarks[2]; // Gốc ngón cái
+        const indexFingerBase = landmarks[5]; // Gốc ngón trỏ
+
+        // Kiểm tra ngón cái hướng lên trên và tách khỏi các ngón khác
+        return thumbTip[1] < thumbBase[1] && thumbBase[1] < indexFingerBase[1];
+         };
+
+        // Hàm phát hiện "Thumbs Down"
+        const isThumbsDown = (landmarks) => {
+        const thumbTip = landmarks[4];
+        const thumbBase = landmarks[2];
+        const indexFingerBase = landmarks[5];
+
+        // Kiểm tra ngón cái hướng xuống dưới và tách khỏi các ngón khác
+        return thumbTip[1] > thumbBase[1] && thumbBase[1] > indexFingerBase[1];
+        };
+
+        // Hàm phát hiện "Peace Sign"
+        const isPeaceSign = (landmarks) => {
+        const indexTip = landmarks[8];
+        const middleTip = landmarks[12];
+        const indexBase = landmarks[5];
+        const middleBase = landmarks[9];
+
+        // Kiểm tra khoảng cách giữa ngón trỏ và giữa lớn hơn, còn các ngón khác không giơ lên
+        return (
+        indexTip[1] < indexBase[1] &&
+        middleTip[1] < middleBase[1] &&
+        Math.abs(indexTip[0] - middleTip[0]) > 0.3
+        );
+        };
+
+        // Hàm phát hiện "Fist"
+        const isFist = (landmarks) => {
+          // Kiểm tra tất cả các đầu ngón tay gần lòng bàn tay
+          for (let i = 4; i <= 20; i += 4) {
+            if (landmarks[i][1] < landmarks[i - 2][1]) {
+              return false;
+            }
+          }
+          return true;
+        };
   
         const predictions = await model.estimateHands(video);
         if (predictions.length > 0) {
@@ -181,6 +227,13 @@ export function Computer({ bodyColor, screenColor, keyboardColor, setShowSSD, is
           if (fingerCount === 1) setIsSplit((prev) => !prev);
           if (fingerCount === 2) setShowSSD((prev) => !prev);
           if (fingerCount === 3) setIsFloating((prev) => !prev);
+          
+          // Phát hiện cử chỉ
+          if (isThumbsUp(fingers)) moveModel("up"); // Ngón cái chỉ lên
+          if (isThumbsDown(fingers)) moveModel("down"); // Ngón cái chỉ xuống
+          if (isPeaceSign(fingers)) moveModel("forward"); // Hình chữ V
+          if (isFist(fingers)) moveModel("backward"); // Nắm tay
+          
         }
         setTimeout(detectHands, 1000);
       };
