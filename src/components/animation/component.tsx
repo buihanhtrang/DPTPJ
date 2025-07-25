@@ -31,6 +31,24 @@ const UFOComponent: React.FC<UFOProps> = ({ isVisible }) => {
 
   return (
     <>
+          {/* Sides */}
+          <Lightformer
+        intensity={4}
+        rotation-y={Math.PI / 2}
+        position={[-5, 1, -1]}
+        scale={[20, 0.1, 1]}
+      />
+      <Lightformer
+        rotation-y={Math.PI / 2}
+        position={[-5, -1, -1]}
+        scale={[20, 0.5, 1]}
+      />
+      <Lightformer
+        rotation-y={-Math.PI / 2}
+        position={[10, 1, 0]}
+        scale={[20, 1, 1]}
+      />
+      
       {/* Glowing Ring */}
       <Float speed={5} floatIntensity={2} rotationIntensity={1}>
         <Lightformer
