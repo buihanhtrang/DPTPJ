@@ -25,7 +25,7 @@ export const getGeminiResponse = async (messages) => {
   
   try {
     const response = await axios({
-      url: "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=AIzaSyCePR47auiVFxOJFV76n9vhsZpfOE0xwGU",
+      url: "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=[API key]",
       method: "post",
       data: {
         contents: formattedContents,
